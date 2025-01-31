@@ -1,12 +1,14 @@
 import {
-    Button,
+  Button,
   Paper,
+  Stack,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
   TableRow,
+  TextField,
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
@@ -15,10 +17,12 @@ import EditIcon from "@mui/icons-material/EditNote";
 
 function ListadoEquipos() {
   const [datos, setDatos] = useState([]);
+  const [equipoBuscado, setEquipoBuscado] = useState("");
+  const [equipoEncontrado, setEquipoEncontrado] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    async function getPlatos() {
+    async function getEquipos() {
       let response = await fetch("http://localhost:3000/api/equipo/");
 
       if (response.ok) {
@@ -27,8 +31,31 @@ function ListadoEquipos() {
       }
     }
 
-    getPlatos();
+    getEquipos();
   }, []); // Se ejecuta solo en el primer renderizado
+
+  const handleSubmit = async (e) => {
+    // No hacemos submit
+    e.preventDefault();
+
+    // Enviamos los datos mediante fetch
+    try {
+      let response = await fetch(
+        "http://localhost:3000/api/equipo/" + equipoBuscado
+      );
+      if (response.ok) {
+        let data = await response.json();
+        setEquipoEncontrado(data.datos);
+      } else if (response.status === 404) {
+        let data = await response.json();
+        alert(data.mensaje);
+        navigate("/"); // Volver a la página principal por ruta erronea
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      alert("Error:", error);
+    }
+  };
 
   const handleDelete = async (idequipo) => {
     let response = await fetch("http://localhost:3000/api/equipo/" + idequipo, {
@@ -45,8 +72,42 @@ function ListadoEquipos() {
     }
   };
 
+  const handleChange = (e) => {
+    setEquipoBuscado(e.target.value);
+  };
+
   return (
     <>
+      <div style={{ marginTop: "2rem" }}>
+        <Stack
+          component="form"
+          spacing={2}
+          onSubmit={handleSubmit}
+          sx={{ mx: 2 }}
+        >
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              gap: "1rem",
+            }}
+          >
+            <TextField
+              id="outlined-basic"
+              label="Buscar por id"
+              variant="outlined"
+              name="idequipo"
+              value={equipoBuscado}
+              sx={{ width: "100%" }}
+              onChange={handleChange}
+              required
+            />
+            <Button variant="contained" color="inherit" type="submit">
+              Buscar
+            </Button>
+          </div>
+        </Stack>
+      </div>
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
@@ -61,7 +122,7 @@ function ListadoEquipos() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {datos.map((equipo) => (
+            {(equipoEncontrado ? [equipoEncontrado] : datos).map((equipo) => (
               <TableRow
                 key={equipo.idequipo}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
@@ -84,7 +145,14 @@ function ListadoEquipos() {
                   {equipo.dinero_transferencias}
                 </TableCell>
                 <TableCell align="center">{equipo.fechacreacion}</TableCell>
-                <TableCell align="center" style={{ display: "flex", gap: "1rem", justifyContent: "center" }}>
+                <TableCell
+                  align="center"
+                  style={{
+                    display: "flex",
+                    gap: "1rem",
+                    justifyContent: "center",
+                  }}
+                >
                   <Button
                     variant="contained"
                     onClick={() => handleDelete(equipo.idequipo)}
@@ -92,12 +160,14 @@ function ListadoEquipos() {
                   >
                     <DeleteIcon fontSize="small" />
                   </Button>
-                    <Button
-                      variant="contained"
-                      onClick={() => navigate("/modificarequipo/" + equipo.idequipo)}
-                    >
-                      <EditIcon fontSize="small" />
-                    </Button>
+                  <Button
+                    variant="contained"
+                    onClick={() =>
+                      navigate("/modificarequipo/" + equipo.idequipo)
+                    }
+                  >
+                    <EditIcon fontSize="small" />
+                  </Button>
                 </TableCell>
               </TableRow>
             ))}
