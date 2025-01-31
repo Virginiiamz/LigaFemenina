@@ -50,10 +50,13 @@ function AltaEquipo() {
   };
 
   const handleChange = (e) => {
+    const { name, value, type, checked } = e.target;
     setDatos({
       ...datos,
-      [e.target.name]: e.target.value,
+      [name]: type === "checkbox" ? checked : value,
     });
+    console.log(datos);
+    
   };
 
   return (
@@ -124,9 +127,8 @@ function AltaEquipo() {
               onChange={handleChange}
             />
             <FormControlLabel
-              control={<Checkbox defaultChecked />}
+              control={<Checkbox checked={datos.esta_federado} name="esta_federado" onChange={handleChange} />}
               label="El equipo esta federado"
-              onChange={handleChange}
             />
 
             <Button variant="contained" color="inherit" type="submit">
