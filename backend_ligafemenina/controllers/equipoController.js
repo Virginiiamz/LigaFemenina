@@ -35,12 +35,16 @@ class EquipoController {
     try {
       const nuevoEquipo = await Equipo.create(equipo);
 
-      res.status(201).json(Respuesta.exito(nuevoEquipo, "Equipo creado correctamente"));
+      res
+        .status(201)
+        .json(Respuesta.exito(nuevoEquipo, "Equipo creado correctamente"));
     } catch (err) {
       logMensaje("Error :" + err);
       res
         .status(500)
-        .json(Respuesta.error(null, `Error al crear un plato nuevo: ${equipo}`));
+        .json(
+          Respuesta.error(null, `Error al crear un plato nuevo: ${equipo}`)
+        );
     }
   }
 
@@ -97,6 +101,27 @@ class EquipoController {
     }
   }
 
+  async getEquipoByCiudad(req, res) {
+    const ciudad = req.params.ciudad; // Obtenemos el parámetro de la ciudad de la URL
+
+    try {
+      const equipos = await Equipo.findAll({
+        where: { ciudad: ciudad }, // Filtramos equipos por la ciudad
+      });
+
+      if (equipos.length === 0) {
+        return res
+          .status(404)
+          .json({ mensaje: "No se encontraron equipos en esa ciudad" });
+      }
+
+      res.json({ datos: equipos });
+    } catch (error) {
+      console.error("Error al buscar equipos:", error);
+      res.status(500).json({ mensaje: "Error al recuperar los datos" });
+    }
+  }
+
   async updateEquipo(req, res) {
     const equipo = req.body; // Recuperamos datos para actualizar
     const idequipo = req.params.idequipo; // dato de la ruta
@@ -108,13 +133,18 @@ class EquipoController {
     }
 
     try {
-      const numFilas = await Equipo.update({ ...equipo }, { where: { idequipo } });
+      const numFilas = await Equipo.update(
+        { ...equipo },
+        { where: { idequipo } }
+      );
 
       if (numFilas == 0) {
         // No se ha encontrado lo que se quería actualizar o no hay nada que cambiar
         res
           .status(404)
-          .json(Respuesta.error(null, "No encontrado o no modificado: " + idequipo));
+          .json(
+            Respuesta.error(null, "No encontrado o no modificado: " + idequipo)
+          );
       } else {
         // Al dar status 204 no se devuelva nada
         // res.status(204).json(Respuesta.exito(null, "Plato actualizado"));
