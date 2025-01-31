@@ -96,6 +96,42 @@ class EquipoController {
         );
     }
   }
+
+  async updateEquipo(req, res) {
+    const equipo = req.body; // Recuperamos datos para actualizar
+    const idequipo = req.params.idequipo; // dato de la ruta
+
+    if (idequipo != equipo.idequipo) {
+      return res
+        .status(400)
+        .json(Respuesta.error(null, "El id del equipo no coincide"));
+    }
+
+    try {
+      const numFilas = await Equipo.update({ ...equipo }, { where: { idequipo } });
+
+      if (numFilas == 0) {
+        // No se ha encontrado lo que se quería actualizar o no hay nada que cambiar
+        res
+          .status(404)
+          .json(Respuesta.error(null, "No encontrado o no modificado: " + idequipo));
+      } else {
+        // Al dar status 204 no se devuelva nada
+        // res.status(204).json(Respuesta.exito(null, "Plato actualizado"));
+        res.status(204).send();
+      }
+    } catch (err) {
+      logMensaje("Error :" + err);
+      res
+        .status(500)
+        .json(
+          Respuesta.error(
+            null,
+            `Error al actualizar los datos: ${req.originalUrl}`
+          )
+        );
+    }
+  }
 }
 
 module.exports = new EquipoController();
