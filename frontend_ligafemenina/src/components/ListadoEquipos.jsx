@@ -11,6 +11,7 @@ import {
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/EditNote";
 
 function ListadoEquipos() {
   const [datos, setDatos] = useState([]);
@@ -56,9 +57,7 @@ function ListadoEquipos() {
               <TableCell align="center">CIUDAD</TableCell>
               <TableCell align="center">DINERO DISPONIBLE</TableCell>
               <TableCell align="center">FECHA DE CREACION</TableCell>
-              <TableCell align="center" colSpan={2}>
-                ACCIONES
-              </TableCell>
+              <TableCell align="center">ACCIONES</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -78,7 +77,6 @@ function ListadoEquipos() {
                     alt={equipo.nombre}
                     loading="lazy"
                   />
-                  {/* {equipo.urlimagen} */}
                 </TableCell>
                 <TableCell align="center">{equipo.nombre}</TableCell>
                 <TableCell align="center">{equipo.ciudad}</TableCell>
@@ -86,7 +84,7 @@ function ListadoEquipos() {
                   {equipo.dinero_transferencias}
                 </TableCell>
                 <TableCell align="center">{equipo.fechacreacion}</TableCell>
-                <TableCell>
+                <TableCell align="center" style={{ display: "flex", gap: "1rem", justifyContent: "center" }}>
                   <Button
                     variant="contained"
                     onClick={() => handleDelete(equipo.idequipo)}
@@ -94,8 +92,13 @@ function ListadoEquipos() {
                   >
                     <DeleteIcon fontSize="small" />
                   </Button>
+                    <Button
+                      variant="contained"
+                      onClick={() => navigate("/modificarequipo/" + equipo.idequipo)}
+                    >
+                      <EditIcon fontSize="small" />
+                    </Button>
                 </TableCell>
-                <TableCell align="center">{equipo.fechacreacion}</TableCell>
               </TableRow>
             ))}
           </TableBody>
