@@ -54,9 +54,7 @@ function AltaEquipo() {
     setDatos({
       ...datos,
       [name]: type === "checkbox" ? checked : value,
-    });
-    console.log(datos);
-    
+    }); 
   };
 
   return (
