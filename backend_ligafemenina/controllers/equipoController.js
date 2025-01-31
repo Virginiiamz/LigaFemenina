@@ -72,6 +72,30 @@ class EquipoController {
         );
     }
   }
+
+  async getEquipoById(req, res) {
+    // El id plato viene en la ruta /api/platos/:idplato
+    const idequipo = req.params.idequipo;
+    try {
+      const fila = await Equipo.findByPk(idequipo);
+      if (fila) {
+        // Si se ha recuprado un plato
+        res.json(Respuesta.exito(fila, "Equipo recuperado"));
+      } else {
+        res.status(404).json(Respuesta.error(null, "Equipo no encontrado"));
+      }
+    } catch (err) {
+      logMensaje("Error :" + err);
+      res
+        .status(500)
+        .json(
+          Respuesta.error(
+            null,
+            `Error al recuperar los datos: ${req.originalUrl}`
+          )
+        );
+    }
+  }
 }
 
 module.exports = new EquipoController();
