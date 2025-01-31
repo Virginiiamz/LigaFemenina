@@ -5,7 +5,7 @@ const equipoController = require('../controllers/equipoController');
 
 router.get('/', equipoController.getAllEquipos);
 // router.get('/:idtipo', tipoController.getTipoById);
-// router.post('/', tipoController.createTipo);
+router.post('/', equipoController.createEquipo);
 // router.put('/:idtipo', tipoController.updateTipo);
 // router.delete('/:idtipo', tipoController.deleteTipo);
 

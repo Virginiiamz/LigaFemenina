@@ -27,6 +27,22 @@ class EquipoController {
         );
     }
   }
+
+  async createEquipo(req, res) {
+    // Implementa la lógica para crear un nuevo plato
+    const equipo = req.body;
+
+    try {
+      const nuevoEquipo = await Equipo.create(equipo);
+
+      res.status(201).json(Respuesta.exito(nuevoEquipo, "Equipo creado correctamente"));
+    } catch (err) {
+      logMensaje("Error :" + err);
+      res
+        .status(500)
+        .json(Respuesta.error(null, `Error al crear un plato nuevo: ${equipo}`));
+    }
+  }
 }
 
 module.exports = new EquipoController();

@@ -1,2 +1,15 @@
-### Recuperar los equipos
+### Recupera los equipos
 GET http://localhost:3000/api/equipo
+
+### Crea un nuevo equipo
+POST http://localhost:3000/api/equipo
+Content-Type: application/json
+
+{
+    "nombre": "Sevilla",
+    "ciudad": "Sevilla",
+    "urlimagen": "",
+    "esta_federado": false,
+    "dinero_transferencias": 6000,
+    "fechacreacion": "2021-01-01",
+}
