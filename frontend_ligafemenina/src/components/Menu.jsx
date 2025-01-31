@@ -47,6 +47,9 @@ function Menu() {
                   <Link to="/altaequipo" style={{ color: "#4f4f4f" }}>
                     <MDBDropdownItem link>Alta de equipo</MDBDropdownItem>
                   </Link>
+                  <Link to="/buscadorequipos" style={{ color: "#4f4f4f" }}>
+                    <MDBDropdownItem link>Buscador de equipos</MDBDropdownItem>
+                  </Link>
                   <Link to="/listadoequipos" style={{ color: "#4f4f4f" }}>
                     <MDBDropdownItem link>Listado de equipos</MDBDropdownItem>
                   </Link>
