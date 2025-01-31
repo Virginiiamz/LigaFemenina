@@ -13,6 +13,7 @@ import {
 } from "react-router";
 import Home from './pages/Home';
 import PaginaError from './pages/PaginaError';
+import AltaEquipo from './components/AltaEquipo';
 
 
 let router = createBrowserRouter([
@@ -22,8 +23,8 @@ let router = createBrowserRouter([
     errorElement : <PaginaError />,
     children: [
       {
-        // path: "shows/:showId",
-        // element: <Show />
+        path: "/altaequipo",
+        element: <AltaEquipo />
       },
     ],
   },

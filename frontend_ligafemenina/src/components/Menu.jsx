@@ -44,7 +44,7 @@ function Menu() {
                   Equipos
                 </MDBDropdownToggle>
                 <MDBDropdownMenu>
-                  <Link to="/" style={{ color: "#4f4f4f" }}>
+                  <Link to="/altaequipo" style={{ color: "#4f4f4f" }}>
                     <MDBDropdownItem link>Alta de equipo</MDBDropdownItem>
                   </Link>
                   <Link to="/" style={{ color: "#4f4f4f" }}>

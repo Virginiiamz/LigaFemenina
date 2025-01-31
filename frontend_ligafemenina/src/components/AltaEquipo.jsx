@@ -1,0 +1,142 @@
+import {
+  Typography,
+  TextField,
+  Stack,
+  Button,
+  Grid,
+  FormControlLabel,
+  Checkbox,
+} from "@mui/material";
+import { useState } from "react";
+import { useNavigate } from "react-router";
+
+function AltaEquipo() {
+  const [datos, setDatos] = useState({
+    nombre: "",
+    ciudad: "",
+    urlimagen: "",
+    esta_federado: false,
+    dinero_transferencias: 0,
+    fechacreacion: new Date(),
+  });
+
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
+    // No hacemos submit
+    e.preventDefault();
+
+    // Enviamos los datos mediante fetch
+    try {
+      const response = await fetch("http://localhost:3000/api/equipo/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(datos),
+      });
+
+      if (response.ok) {
+        const respuesta = await response.json();
+        alert(respuesta.mensaje);
+        if (respuesta.ok) {
+          navigate("/"); // Volver a la página principal
+        }
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      alert("Error:", error);
+    }
+  };
+
+  const handleChange = (e) => {
+    setDatos({
+      ...datos,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  return (
+    <>
+      <Typography variant="h4" align="center" sx={{ mt: 2 }}>
+        Alta de equipo
+      </Typography>
+      <Grid
+        container
+        spacing={2}
+        sx={{ mt: 2, justifyContent: "center", alignItems: "center" }}
+      >
+        <Grid size={{ xs: 12, sm: 6, md: 4 }}>
+          <Stack
+            component="form"
+            spacing={2}
+            onSubmit={handleSubmit}
+            sx={{ mx: 2 }}
+          >
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                gap: "1rem",
+              }}
+            >
+              <TextField
+                id="outlined-basic"
+                label="Nombre"
+                variant="outlined"
+                name="nombre"
+                value={datos.nombre}
+                onChange={handleChange}
+              />
+              <TextField
+                id="outlined-basic"
+                label="Ciudad"
+                variant="outlined"
+                name="ciudad"
+                value={datos.ciudad}
+                onChange={handleChange}
+              />
+            </div>
+            <TextField
+              id="outlined-basic"
+              label="Url de la imagen"
+              variant="outlined"
+              name="urlimagen"
+              value={datos.urlimagen}
+              onChange={handleChange}
+            />
+            <TextField
+              id="outlined-basic"
+              label="Total dinero disponible para transferencias"
+              variant="outlined"
+              name="dinero_transferencias"
+              value={datos.dinero_transferencias}
+              type="number"
+              onChange={handleChange}
+            />
+            <TextField
+              id="outlined-basic"
+              label="Fecha de creación"
+              variant="outlined"
+              name="fechacreacion"
+              value={datos.fechacreacion}
+              type="date"
+              onChange={handleChange}
+            />
+            <FormControlLabel
+              control={<Checkbox defaultChecked />}
+              label="El equipo esta federado"
+              onChange={handleChange}
+            />
+
+            <Button variant="contained" color="inherit" type="submit">
+              Guardar
+            </Button>
+          </Stack>
+        </Grid>
+      </Grid>
+    </>
+  );
+}
+
+export default AltaEquipo;
