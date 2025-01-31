@@ -43,6 +43,35 @@ class EquipoController {
         .json(Respuesta.error(null, `Error al crear un plato nuevo: ${equipo}`));
     }
   }
+
+  async deleteEquipo(req, res) {
+    const idequipo = req.params.idequipo;
+    try {
+      const numFilas = await Equipo.destroy({
+        where: {
+          idequipo: idequipo,
+        },
+      });
+      if (numFilas == 0) {
+        // No se ha encontrado lo que se quería borrar
+        res
+          .status(404)
+          .json(Respuesta.error(null, "No encontrado: " + idequipo));
+      } else {
+        res.status(204).send();
+      }
+    } catch (err) {
+      logMensaje("Error :" + err);
+      res
+        .status(500)
+        .json(
+          Respuesta.error(
+            null,
+            `Error al eliminar los datos: ${req.originalUrl}`
+          )
+        );
+    }
+  }
 }
 
 module.exports = new EquipoController();

@@ -7,6 +7,6 @@ router.get('/', equipoController.getAllEquipos);
 // router.get('/:idtipo', tipoController.getTipoById);
 router.post('/', equipoController.createEquipo);
 // router.put('/:idtipo', tipoController.updateTipo);
-// router.delete('/:idtipo', tipoController.deleteTipo);
+router.delete('/:idequipo', equipoController.deleteEquipo);
 
 module.exports = router;
