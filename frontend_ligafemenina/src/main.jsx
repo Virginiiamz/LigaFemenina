@@ -14,6 +14,7 @@ import {
 import Home from './pages/Home';
 import PaginaError from './pages/PaginaError';
 import AltaEquipo from './components/AltaEquipo';
+import ListadoEquipos from './components/ListadoEquipos';
 
 
 let router = createBrowserRouter([
@@ -25,6 +26,10 @@ let router = createBrowserRouter([
       {
         path: "/altaequipo",
         element: <AltaEquipo />
+      },
+      {
+        path: "/listadoequipos",
+        element: <ListadoEquipos />
       },
     ],
   },
