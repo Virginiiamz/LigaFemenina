@@ -101,12 +101,13 @@ class EquipoController {
     }
   }
 
-  async getEquipoByCiudad(req, res) {
+  async getEquipoByCiudadAndFederado(req, res) {
     const ciudad = req.params.ciudad; // Obtenemos el parámetro de la ciudad de la URL
+    const esta_federado = req.params.esta_federado;
 
     try {
       const equipos = await Equipo.findAll({
-        where: { ciudad: ciudad }, // Filtramos equipos por la ciudad
+        where: { ciudad: ciudad, esta_federado: esta_federado === "true" }, // Filtramos equipos por la ciudad
       });
 
       if (equipos.length === 0) {

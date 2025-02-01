@@ -17,11 +17,13 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router";
+import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/EditNote";
 
 function BuscarEquipo() {
   const [datos, setDatos] = useState({
     ciudad: "",
-    // esta_federado: true,
+    esta_federado: true,
   });
   const [equiposEncontrado, setEquiposEncontrado] = useState([]);
   const navigate = useNavigate();
@@ -31,28 +33,47 @@ function BuscarEquipo() {
     e.preventDefault();
 
     try {
-        let response = await fetch(
-          "http://localhost:3000/api/equipo/" + datos.ciudad // Enviamos el valor de la ciudad en la URL
-        );
-        if (response.ok) {
-          let data = await response.json();
-          setEquiposEncontrado(data.datos); // Guardamos los equipos encontrados en el estado
-        } else if (response.status === 404) {
-          let data = await response.json();
-          alert(data.mensaje); // Mostramos el mensaje en caso de que no haya equipos encontrados
-          navigate("/"); // Redirigir a la página principal si la ciudad no tiene equipos
-        }
-      } catch (error) {
-        console.error("Error:", error);
-        alert("Error:", error); // Mostramos cualquier error que ocurra durante la búsqueda
+      let response = await fetch(
+        "http://localhost:3000/api/equipo/ciudad/" + datos.ciudad + "/esta_federado/" + datos.esta_federado
+      );
+      if (response.ok) {
+        let data = await response.json();
+
+        console.log(data.datos);
+
+        setEquiposEncontrado(data.datos); // Guardamos los equipos encontrados en el estado
+      } else if (response.status === 404) {
+        let data = await response.json();
+        alert(data.mensaje); // Mostramos el mensaje en caso de que no haya equipos encontrados
+        navigate("/"); // Redirigir a la página principal si la ciudad no tiene equipos
       }
+    } catch (error) {
+      console.error("Error:", error);
+      alert("Error:", error); // Mostramos cualquier error que ocurra durante la búsqueda
+    }
+  };
+
+  const handleDelete = async (idequipo) => {
+    let response = await fetch("http://localhost:3000/api/equipo/" + idequipo, {
+      method: "DELETE",
+    });
+
+    if (response.ok) {
+      // Utilizando filter creo un array sin el plato borrado
+      const trasBorrarEquipos = equiposEncontrado.filter(
+        (equipo) => equipo.idequipo != idequipo
+      );
+      // Establece los datos de nuevo para provocar un renderizado
+      setEquiposEncontrado(trasBorrarEquipos);
+      navigate("/buscadorequipos");
+    }
   };
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value, type, checked } = e.target;
     setDatos({
       ...datos,
-      [name]: value,
+      [name]: type === "checkbox" ? checked : value,
     });
   };
 
@@ -80,8 +101,9 @@ function BuscarEquipo() {
               name="ciudad"
               value={datos.ciudad}
               onChange={handleChange}
+              required
             />
-            {/* <FormControlLabel
+            <FormControlLabel
               control={
                 <Checkbox
                   checked={datos.esta_federado}
@@ -90,7 +112,7 @@ function BuscarEquipo() {
                 />
               }
               label="El equipo esta federado"
-            /> */}
+            />
             <Button variant="contained" color="inherit" type="submit">
               Buscar
             </Button>
@@ -142,7 +164,7 @@ function BuscarEquipo() {
                     justifyContent: "center",
                   }}
                 >
-                  {/* <Button
+                  <Button
                     variant="contained"
                     onClick={() => handleDelete(equipo.idequipo)}
                     color="error"
@@ -156,7 +178,7 @@ function BuscarEquipo() {
                     }
                   >
                     <EditIcon fontSize="small" />
-                  </Button> */}
+                  </Button>
                 </TableCell>
               </TableRow>
             ))}
