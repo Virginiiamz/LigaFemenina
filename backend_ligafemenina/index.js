@@ -11,6 +11,8 @@ const cors = require("cors");
 
 // Importar gestores de rutas
 const equipoRoutes = require("./routes/equipoRoutes");
+const jugadoraRoutes = require("./routes/jugadoraRoutes");
+
 
 const app = express();
 
@@ -27,6 +29,7 @@ app.use(
 
 // Configurar rutas de la API Rest
 app.use("/api/equipo", equipoRoutes);
+app.use("/api/jugadora", jugadoraRoutes);
 
 // Configurar el middleware para servir archivos estáticos desde el directorio 'public\old_js_vainilla'
 app.use(express.static(path.join(__dirname, "public")));

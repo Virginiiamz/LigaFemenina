@@ -43,7 +43,7 @@ class EquipoController {
       res
         .status(500)
         .json(
-          Respuesta.error(null, `Error al crear un plato nuevo: ${equipo}`)
+          Respuesta.error(null, `Error al crear un equipo nuevo: ${equipo}`)
         );
     }
   }

@@ -12,6 +12,7 @@ import {
   Typography,
 } from "@mui/material";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
 
 function AltaJugadora() {
   const [datos, setDatos] = useState({
@@ -20,10 +21,15 @@ function AltaJugadora() {
     posicion: "",
     sueldo: 0,
     disponible_jugar: true,
-    fecha_inscripcion: new Date(),
-    idequipo: 0,
+    fechainscripcion: new Date(),
+    idequipo: "",
   });
   const [equipos, setEquipos] = useState([]);
+  const navigate = useNavigate();
+
+  const [validacion, setValidacion] = useState({
+    sueldo: false,
+  });
 
   useEffect(() => {
     async function getEquipos() {
@@ -37,6 +43,57 @@ function AltaJugadora() {
 
     getEquipos();
   }, []); // Se ejecuta solo en el primer renderizado
+
+  const handleSubmit = async (e) => {
+    // No hacemos submit
+    e.preventDefault();
+
+    console.log(datos);
+    if (validarDatos()) {
+      // Enviamos los datos mediante fetch
+      try {
+        const response = await fetch("http://localhost:3000/api/jugadora/", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(datos),
+        });
+
+        if (response.ok) {
+          const respuesta = await response.json();
+          alert(respuesta.mensaje);
+          if (respuesta.ok) {
+            navigate("/"); // Volver a la página principal
+          }
+        }
+      } catch (error) {
+        console.error("Error:", error);
+        alert("Error:", error);
+      }
+    }
+  };
+
+  function validarDatos() {
+    // En principio, damos por bueno el formulario
+    let validado = true;
+    // Estado de la validación auxiliar
+    let validacionAux = {
+      sueldo: false,
+    };
+
+    if (datos.sueldo < 0) {
+      // Error en el dinero
+      validacionAux.sueldo = true;
+      // Formulario invalido
+      validado = false;
+    }
+
+    // Actualizo el estado de la validacion de los Textfields
+    setValidacion(validacionAux);
+    console.log("Formulario valido:", validado);
+    return validado;
+  }
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -60,7 +117,7 @@ function AltaJugadora() {
           <Stack
             component="form"
             spacing={2}
-            // onSubmit={handleSubmit}
+            onSubmit={handleSubmit}
             sx={{ mx: 2 }}
           >
             <div
@@ -77,6 +134,7 @@ function AltaJugadora() {
                 name="nombre"
                 value={datos.nombre}
                 onChange={handleChange}
+                required
               />
               <TextField
                 id="outlined-basic"
@@ -85,6 +143,7 @@ function AltaJugadora() {
                 name="apellidos"
                 value={datos.apellidos}
                 onChange={handleChange}
+                required
               />
             </div>
             <FormControl>
@@ -96,6 +155,7 @@ function AltaJugadora() {
                 onChange={handleChange}
                 autoWidth
                 displayEmpty
+                required
               >
                 {equipos.map((equipo) => (
                   <MenuItem key={equipo.idequipo} value={equipo.idequipo}>
@@ -111,6 +171,7 @@ function AltaJugadora() {
               name="posicion"
               value={datos.posicion}
               onChange={handleChange}
+              required
             />
             <TextField
               id="outlined-basic"
@@ -120,15 +181,22 @@ function AltaJugadora() {
               value={datos.sueldo}
               type="number"
               onChange={handleChange}
+              required
+              error={validacion.sueldo}
+              helperText={
+                validacion.sueldo &&
+                "El sueldo tiene que ser positivo"
+              }
             />
             <TextField
               id="outlined-basic"
               label="Fecha de inscripcion"
               variant="outlined"
-              name="fecha_inscripcion"
-              value={datos.fecha_inscripcion}
+              name="fechainscripcion"
+              value={datos.fechainscripcion}
               type="date"
               onChange={handleChange}
+              required
             />
             <FormControlLabel
               control={
