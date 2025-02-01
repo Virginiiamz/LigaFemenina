@@ -62,7 +62,9 @@ function Menu() {
                   Jugadoras
                 </MDBDropdownToggle>
                 <MDBDropdownMenu>
-                  <MDBDropdownItem link>Alta de jugadora</MDBDropdownItem>
+                  <Link to="/altajugadora" style={{ color: "#4f4f4f" }}>
+                    <MDBDropdownItem link>Alta de jugadora</MDBDropdownItem>
+                  </Link>
                   <Link to="/" style={{ color: "#4f4f4f" }}>
                     <MDBDropdownItem link>Listado de jugadoras</MDBDropdownItem>
                   </Link>
