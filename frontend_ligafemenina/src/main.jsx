@@ -18,6 +18,7 @@ import ListadoEquipos from './components/ListadoEquipos';
 import ModificarEquipo from './components/ModificarEquipo';
 import BuscarEquipo from './components/BuscarEquipo';
 import AltaJugadora from './components/AltaJugadora';
+import ListadoJugadoras from './components/ListadoJugadoras';
 
 
 let router = createBrowserRouter([
@@ -45,6 +46,10 @@ let router = createBrowserRouter([
       {
         path: "/altajugadora",
         element: <AltaJugadora />
+      },
+      {
+        path: "/listadojugadoras",
+        element: <ListadoJugadoras />
       },
     ],
   },
