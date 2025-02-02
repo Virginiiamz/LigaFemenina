@@ -34,10 +34,36 @@ function ListadoJugadoras() {
     getJugadoras();
   }, []); // Se ejecuta solo en el primer renderizado
 
+  const handleSubmit = async (e) => {
+    // No hacemos submit
+    e.preventDefault();
+
+    // Enviamos los datos mediante fetch
+    try {
+      let response = await fetch(
+        "http://localhost:3000/api/jugadora/" + jugadoraBuscada
+      );
+      if (response.ok) {
+        let data = await response.json();
+        setJugadoraEncontrada(data.datos);
+      } else if (response.status === 404) {
+        let data = await response.json();
+        alert(data.mensaje);
+        navigate("/"); // Volver a la página principal por ruta erronea
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      alert("Error:", error);
+    }
+  };
+
   const handleDelete = async (idjugadora) => {
-    let response = await fetch("http://localhost:3000/api/jugadora/" + idjugadora, {
-      method: "DELETE",
-    });
+    let response = await fetch(
+      "http://localhost:3000/api/jugadora/" + idjugadora,
+      {
+        method: "DELETE",
+      }
+    );
 
     if (response.ok) {
       // Utilizando filter creo un array sin el plato borrado
@@ -49,13 +75,17 @@ function ListadoJugadoras() {
     }
   };
 
+  const handleChange = (e) => {
+    setJugadoraBuscada(e.target.value);
+  };
+
   return (
     <>
       <div style={{ marginTop: "2rem" }}>
         <Stack
           component="form"
           spacing={2}
-          //   onSubmit={handleSubmit}
+          onSubmit={handleSubmit}
           sx={{ mx: 2 }}
         >
           <div
@@ -72,7 +102,7 @@ function ListadoJugadoras() {
               name="idjugadora"
               value={jugadoraBuscada}
               sx={{ width: "100%" }}
-              //   onChange={handleChange}
+              onChange={handleChange}
               required
             />
             <Button variant="contained" color="inherit" type="submit">

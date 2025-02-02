@@ -103,7 +103,15 @@ class JugadoraController {
   async getJugadoraById(req, res) {
     const idjugadora = req.params.idjugadora;
     try {
-      const fila = await Jugadora.findByPk(idjugadora);
+      const fila = await Jugadora.findByPk(idjugadora, {
+        include: [
+          {
+            model: Equipo,
+            as: "idequipo_equipo", // Usa el alias definido en las relaciones del modelo
+            attributes: ["idequipo", "nombre"], // Selecciona los campos que quieres recuperar del equipo
+          },
+        ],
+      });
       if (fila) {
         res.json(Respuesta.exito(fila, "Jugadora recuperada"));
       } else {
