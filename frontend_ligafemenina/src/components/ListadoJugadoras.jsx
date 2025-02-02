@@ -132,9 +132,9 @@ function ListadoJugadoras() {
                     </Button>
                     <Button
                       variant="contained"
-                      // onClick={() =>
-                      //   navigate("/modificarequipo/" + equipo.idequipo)
-                      // }
+                      onClick={() =>
+                        navigate("/modificarjugadora/" + jugadora.idjugadora)
+                      }
                     >
                       <EditIcon fontSize="small" />
                     </Button>
