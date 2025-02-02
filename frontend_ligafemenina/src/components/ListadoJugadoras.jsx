@@ -93,7 +93,7 @@ function ListadoJugadoras() {
                   <TableCell align="center">{jugadora.nombre}</TableCell>
                   <TableCell align="center">{jugadora.apellidos}</TableCell>
                   <TableCell align="center">{jugadora.posicion}</TableCell>
-                  <TableCell align="center">{jugadora.idequipo.nombre}</TableCell>
+                  <TableCell align="center">{jugadora.idequipo_equipo.nombre}</TableCell>
                   <TableCell align="center">{jugadora.sueldo}</TableCell>
                   <TableCell align="center">{jugadora.fechainscripcion}</TableCell>
                   <TableCell

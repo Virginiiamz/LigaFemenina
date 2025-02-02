@@ -9,8 +9,34 @@ const sequelize = require("../config/sequelize.js");
 const models = initModels(sequelize);
 // Recuperar el modelo equipo
 const Jugadora = models.jugadora;
+const Equipo = models.equipo;
 
 class JugadoraController {
+  async getAllJugadoras(req, res) {
+    try {
+      const data = await Jugadora.findAll({
+        include: [
+        {
+          model: Equipo,
+          as: "idequipo_equipo", // Usa el alias definido en las relaciones del modelo
+          attributes: ["idequipo", "nombre"], // Selecciona los campos que quieres recuperar del equipo
+        },
+      ],
+      }); // Recupera todos los equipos
+      res.json(Respuesta.exito(data, "Datos de las jugadoras recuperados"));
+    } catch (err) {
+      // Handle errors during the model call
+      res
+        .status(500)
+        .json(
+          Respuesta.error(
+            null,
+            `Error al recuperar los datos de las jugadoras: ${req.originalUrl}`
+          )
+        );
+    }
+  }
+
   async createJugadora(req, res) {
     // Implementa la lógica para crear un nuevo plato
     const {
@@ -41,12 +67,7 @@ class JugadoraController {
       logMensaje("Error :" + err);
       res
         .status(500)
-        .json(
-          Respuesta.error(
-            null,
-            `Error al crear una jugadora nueva`
-          )
-        );
+        .json(Respuesta.error(null, `Error al crear una jugadora nueva`));
     }
   }
 }
