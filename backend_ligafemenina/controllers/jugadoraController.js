@@ -70,6 +70,35 @@ class JugadoraController {
         .json(Respuesta.error(null, `Error al crear una jugadora nueva`));
     }
   }
+
+  async deleteJugadora(req, res) {
+      const idjugadora = req.params.idjugadora;
+      try {
+        const numFilas = await Jugadora.destroy({
+          where: {
+            idjugadora: idjugadora,
+          },
+        });
+        if (numFilas == 0) {
+          // No se ha encontrado lo que se quería borrar
+          res
+            .status(404)
+            .json(Respuesta.error(null, "No encontrado: " + idjugadora));
+        } else {
+          res.status(204).send();
+        }
+      } catch (err) {
+        logMensaje("Error :" + err);
+        res
+          .status(500)
+          .json(
+            Respuesta.error(
+              null,
+              `Error al eliminar los datos: ${req.originalUrl}`
+            )
+          );
+      }
+    }
 }
 
 module.exports = new JugadoraController();

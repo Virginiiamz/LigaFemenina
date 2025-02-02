@@ -21,18 +21,33 @@ function ListadoJugadoras() {
   const [jugadoraEncontrada, setJugadoraEncontrada] = useState(null);
   const navigate = useNavigate();
 
-    useEffect(() => {
-        async function getJugadoras() {
-          let response = await fetch("http://localhost:3000/api/jugadora/");
-    
-          if (response.ok) {
-            let data = await response.json();
-            setDatos(data.datos);
-          }
-        }
-    
-        getJugadoras();
-      }, []); // Se ejecuta solo en el primer renderizado
+  useEffect(() => {
+    async function getJugadoras() {
+      let response = await fetch("http://localhost:3000/api/jugadora/");
+
+      if (response.ok) {
+        let data = await response.json();
+        setDatos(data.datos);
+      }
+    }
+
+    getJugadoras();
+  }, []); // Se ejecuta solo en el primer renderizado
+
+  const handleDelete = async (idjugadora) => {
+    let response = await fetch("http://localhost:3000/api/jugadora/" + idjugadora, {
+      method: "DELETE",
+    });
+
+    if (response.ok) {
+      // Utilizando filter creo un array sin el plato borrado
+      const trasBorrarJugadoras = datos.filter(
+        (jugadora) => jugadora.idjugadora != idjugadora
+      );
+      // Establece los datos de nuevo para provocar un renderizado
+      setDatos(trasBorrarJugadoras);
+    }
+  };
 
   return (
     <>
@@ -93,9 +108,13 @@ function ListadoJugadoras() {
                   <TableCell align="center">{jugadora.nombre}</TableCell>
                   <TableCell align="center">{jugadora.apellidos}</TableCell>
                   <TableCell align="center">{jugadora.posicion}</TableCell>
-                  <TableCell align="center">{jugadora.idequipo_equipo.nombre}</TableCell>
+                  <TableCell align="center">
+                    {jugadora.idequipo_equipo.nombre}
+                  </TableCell>
                   <TableCell align="center">{jugadora.sueldo}</TableCell>
-                  <TableCell align="center">{jugadora.fechainscripcion}</TableCell>
+                  <TableCell align="center">
+                    {jugadora.fechainscripcion}
+                  </TableCell>
                   <TableCell
                     align="center"
                     style={{
@@ -106,7 +125,7 @@ function ListadoJugadoras() {
                   >
                     <Button
                       variant="contained"
-                      // onClick={() => handleDelete(equipo.idequipo)}
+                      onClick={() => handleDelete(jugadora.idjugadora)}
                       color="error"
                     >
                       <DeleteIcon fontSize="small" />

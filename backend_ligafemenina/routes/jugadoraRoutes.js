@@ -8,6 +8,6 @@ router.get('/', jugadoraController.getAllJugadoras);
 // router.get('/ciudad/:ciudad/esta_federado/:esta_federado', equipoController.getEquipoByCiudadAndFederado);
 router.post('/', jugadoraController.createJugadora);
 // router.put('/:idequipo', equipoController.updateEquipo);
-// router.delete('/:idequipo', equipoController.deleteEquipo);
+router.delete('/:idjugadora', jugadoraController.deleteJugadora);
 
 module.exports = router;
