@@ -4,10 +4,10 @@ const router = express.Router();
 const jugadoraController = require('../controllers/jugadoraController');
 
 router.get('/', jugadoraController.getAllJugadoras);
-// router.get('/:idequipo', equipoController.getEquipoById);
+router.get('/:idjugadora', jugadoraController.getJugadoraById);
 // router.get('/ciudad/:ciudad/esta_federado/:esta_federado', equipoController.getEquipoByCiudadAndFederado);
 router.post('/', jugadoraController.createJugadora);
-// router.put('/:idequipo', equipoController.updateEquipo);
+router.put('/:idjugadora', jugadoraController.updateJugadora);
 router.delete('/:idjugadora', jugadoraController.deleteJugadora);
 
 module.exports = router;
