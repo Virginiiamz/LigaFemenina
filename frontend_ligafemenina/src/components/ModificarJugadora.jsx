@@ -129,20 +129,20 @@ function ModificarJugadora() {
 
   return (
     <>
-      <Typography variant="h4" align="center" sx={{ mt: 2 }}>
+      <Typography variant="h4" align="center" sx={{ m: 4 }}>
         Modificar jugadora
       </Typography>
       <Grid
         container
         spacing={2}
-        sx={{ mt: 2, justifyContent: "center", alignItems: "center" }}
+        sx={{ my: 2, justifyContent: "center", alignItems: "center" }}
       >
         <Grid size={{ xs: 12, sm: 6, md: 4 }}>
           <Stack
             component="form"
             spacing={2}
             onSubmit={handleSubmit}
-            sx={{ mx: 2 }}
+            sx={{ my: 2 }}
           >
             <div
               style={{

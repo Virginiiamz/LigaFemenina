@@ -1,32 +1,48 @@
 import {
   Button,
   Checkbox,
+  FormControl,
   FormControlLabel,
   Grid,
+  InputLabel,
+  MenuItem,
   Paper,
+  Select,
   Stack,
-  Switch,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
   TableRow,
-  TextField,
   Typography,
 } from "@mui/material";
-import { useState } from "react";
-import { useNavigate } from "react-router";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/EditNote";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
 
-function BuscarEquipo() {
+function BuscarJugadora() {
   const [datos, setDatos] = useState({
-    ciudad: "",
-    esta_federado: true,
+    idequipo: "",
+    disponible_jugar: true,
   });
-  const [equiposEncontrado, setEquiposEncontrado] = useState([]);
+  const [jugadorasEncontradas, setJugadorasEncontradas] = useState([]);
+  const [equipos, setEquipos] = useState([]);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    async function getEquipos() {
+      let response = await fetch("http://localhost:3000/api/equipo/");
+
+      if (response.ok) {
+        let data = await response.json();
+        setEquipos(data.datos);
+      }
+    }
+
+    getEquipos();
+  }, []); // Se ejecuta solo en el primer renderizado
 
   const handleSubmit = async (e) => {
     // No hacemos submit
@@ -34,17 +50,17 @@ function BuscarEquipo() {
 
     try {
       let response = await fetch(
-        "http://localhost:3000/api/equipo/ciudad/" +
-          datos.ciudad +
-          "/esta_federado/" +
-          datos.esta_federado
+        "http://localhost:3000/api/jugadora/equipo/" +
+          datos.idequipo +
+          "/disponible_jugar/" +
+          datos.disponible_jugar
       );
       if (response.ok) {
         let data = await response.json();
 
         console.log(data.datos);
 
-        setEquiposEncontrado(data.datos); // Guardamos los equipos encontrados en el estado
+        setJugadorasEncontradas(data.datos); // Guardamos los equipos encontrados en el estado
       } else if (response.status === 404) {
         let data = await response.json();
         alert(data.mensaje); // Mostramos el mensaje en caso de que no haya equipos encontrados
@@ -56,19 +72,22 @@ function BuscarEquipo() {
     }
   };
 
-  const handleDelete = async (idequipo) => {
-    let response = await fetch("http://localhost:3000/api/equipo/" + idequipo, {
-      method: "DELETE",
-    });
+  const handleDelete = async (idjugadora) => {
+    let response = await fetch(
+      "http://localhost:3000/api/jugadora/" + idjugadora,
+      {
+        method: "DELETE",
+      }
+    );
 
     if (response.ok) {
       // Utilizando filter creo un array sin el plato borrado
-      const trasBorrarEquipos = equiposEncontrado.filter(
-        (equipo) => equipo.idequipo != idequipo
+      const trasBorrarJugadoras = jugadorasEncontradas.filter(
+        (jugadora) => jugadora.idjugadora != idjugadora
       );
       // Establece los datos de nuevo para provocar un renderizado
-      setEquiposEncontrado(trasBorrarEquipos);
-      navigate("/buscadorequipos");
+      setJugadorasEncontradas(trasBorrarJugadoras);
+      navigate("/buscadorjugadoras");
     }
   };
 
@@ -83,7 +102,7 @@ function BuscarEquipo() {
   return (
     <>
       <Typography variant="h4" align="left" sx={{ m: 4 }}>
-        Buscador de equipos
+        Buscador de jugadoras
       </Typography>
       <Grid
         container
@@ -101,69 +120,78 @@ function BuscarEquipo() {
               width: "100%",
             }}
           >
-            <TextField
-              id="outlined-basic"
-              label="Ciudad"
-              variant="outlined"
-              name="ciudad"
-              value={datos.ciudad}
-              onChange={handleChange}
-              required
-              sx={{ width: "100%" }}
-            />
+            <FormControl sx={{ width: "100%" }}>
+              <InputLabel id="equipo">Equipo</InputLabel>
+              <Select
+                labelId="equipo"
+                name="idequipo"
+                value={datos.idequipo}
+                onChange={handleChange}
+                displayEmpty
+                required
+                fullWidth
+              >
+                {equipos.map((equipo) => (
+                  <MenuItem key={equipo.idequipo} value={equipo.idequipo}>
+                    {equipo.nombre}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
             <FormControlLabel
               control={
                 <Checkbox
-                  checked={datos.esta_federado}
-                  name="esta_federado"
+                  checked={datos.disponible_jugar}
+                  name="disponible_jugar"
                   onChange={handleChange}
                 />
               }
-              label="El equipo esta federado"
+              label="La jugadora esta disponible para jugar"
             />
-            <Button sx={{ width: "20rem" }} variant="contained" color="inherit" type="submit">
+            <Button
+              sx={{ width: "20rem" }}
+              variant="contained"
+              color="inherit"
+              type="submit"
+            >
               Buscar
             </Button>
           </Stack>
         </Grid>
       </Grid>
       <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+        <Table sx={{ width: "100%" }} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell align="center">IDEQUIPO</TableCell>
-              <TableCell align="center">IMAGEN</TableCell>
+              <TableCell align="center">IDJUGADORA</TableCell>
               <TableCell align="center">NOMBRE</TableCell>
-              <TableCell align="center">CIUDAD</TableCell>
-              <TableCell align="center">DINERO DISPONIBLE</TableCell>
-              <TableCell align="center">FECHA DE CREACION</TableCell>
+              <TableCell align="center">APELLIDOS</TableCell>
+              <TableCell align="center">POSICION</TableCell>
+              <TableCell align="center">EQUIPO</TableCell>
+              <TableCell align="center">SUELDO</TableCell>
+              <TableCell align="center">FECHA DE INSCRIPCION</TableCell>
               <TableCell align="center">ACCIONES</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {equiposEncontrado?.map((equipo) => (
+            {jugadorasEncontradas?.map((jugadora) => (
               <TableRow
-                key={equipo.idequipo}
+                key={jugadora.idjugadora}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
                 <TableCell component="th" scope="row" align="center">
-                  {equipo.idequipo}
+                  {jugadora.idjugadora}
                 </TableCell>
-                <TableCell component="th" scope="row" align="center">
-                  <img
-                    style={{ width: "32px" }}
-                    srcSet={`${equipo.urlimagen}?w=32&h=32&fit=crop&auto=format&dpr=2`}
-                    src={`${equipo.urlimagen}?w=32&h=32fit=crop&auto=format`}
-                    alt={equipo.nombre}
-                    loading="lazy"
-                  />
-                </TableCell>
-                <TableCell align="center">{equipo.nombre}</TableCell>
-                <TableCell align="center">{equipo.ciudad}</TableCell>
+                <TableCell align="center">{jugadora.nombre}</TableCell>
+                <TableCell align="center">{jugadora.apellidos}</TableCell>
+                <TableCell align="center">{jugadora.posicion}</TableCell>
                 <TableCell align="center">
-                  {equipo.dinero_transferencias}
+                  {jugadora.idequipo_equipo.nombre}
                 </TableCell>
-                <TableCell align="center">{equipo.fechacreacion}</TableCell>
+                <TableCell align="center">{jugadora.sueldo}</TableCell>
+                <TableCell align="center">
+                  {jugadora.fechainscripcion}
+                </TableCell>
                 <TableCell
                   align="center"
                   style={{
@@ -174,7 +202,7 @@ function BuscarEquipo() {
                 >
                   <Button
                     variant="contained"
-                    onClick={() => handleDelete(equipo.idequipo)}
+                    onClick={() => handleDelete(jugadora.idjugadora)}
                     color="error"
                   >
                     <DeleteIcon fontSize="small" />
@@ -182,7 +210,7 @@ function BuscarEquipo() {
                   <Button
                     variant="contained"
                     onClick={() =>
-                      navigate("/modificarequipo/" + equipo.idequipo)
+                      navigate("/modificarjugadora/" + jugadora.idjugadora)
                     }
                   >
                     <EditIcon fontSize="small" />
@@ -197,4 +225,4 @@ function BuscarEquipo() {
   );
 }
 
-export default BuscarEquipo;
+export default BuscarJugadora;

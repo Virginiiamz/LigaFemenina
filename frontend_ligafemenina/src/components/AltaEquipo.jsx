@@ -22,6 +22,10 @@ function AltaEquipo() {
 
   const navigate = useNavigate();
 
+  const [validacion, setValidacion] = useState({
+    dinero_transferencias: false,
+  });
+
   const handleSubmit = async (e) => {
     // No hacemos submit
     e.preventDefault();
@@ -49,17 +53,38 @@ function AltaEquipo() {
     }
   };
 
+  function validarDatos() {
+    // En principio, damos por bueno el formulario
+    let validado = true;
+    // Estado de la validación auxiliar
+    let validacionAux = {
+      dinero_transferencias: false,
+    };
+
+    if (datos.dinero_transferencias < 0) {
+      // Error en el dinero
+      validacionAux.dinero_transferencias = true;
+      // Formulario invalido
+      validado = false;
+    }
+
+    // Actualizo el estado de la validacion de los Textfields
+    setValidacion(validacionAux);
+    console.log("Formulario valido:", validado);
+    return validado;
+  }
+
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     setDatos({
       ...datos,
       [name]: type === "checkbox" ? checked : value,
-    }); 
+    });
   };
 
   return (
     <>
-      <Typography variant="h4" align="center" sx={{ mt: 2 }}>
+      <Typography variant="h4" align="center" sx={{ m: 4 }}>
         Alta de equipo
       </Typography>
       <Grid
@@ -72,7 +97,7 @@ function AltaEquipo() {
             component="form"
             spacing={2}
             onSubmit={handleSubmit}
-            sx={{ mx: 2 }}
+            sx={{ m: 2 }}
           >
             <div
               style={{
@@ -88,6 +113,7 @@ function AltaEquipo() {
                 name="nombre"
                 value={datos.nombre}
                 onChange={handleChange}
+                required
               />
               <TextField
                 id="outlined-basic"
@@ -96,6 +122,7 @@ function AltaEquipo() {
                 name="ciudad"
                 value={datos.ciudad}
                 onChange={handleChange}
+                required
               />
             </div>
             <TextField
@@ -105,6 +132,7 @@ function AltaEquipo() {
               name="urlimagen"
               value={datos.urlimagen}
               onChange={handleChange}
+              
             />
             <TextField
               id="outlined-basic"
@@ -114,6 +142,11 @@ function AltaEquipo() {
               value={datos.dinero_transferencias}
               type="number"
               onChange={handleChange}
+              error={validacion.sueldo}
+              helperText={
+                validacion.sueldo && "El sueldo tiene que ser positivo"
+              }
+              required
             />
             <TextField
               id="outlined-basic"
@@ -123,9 +156,16 @@ function AltaEquipo() {
               value={datos.fechacreacion}
               type="date"
               onChange={handleChange}
+              required
             />
             <FormControlLabel
-              control={<Checkbox checked={datos.esta_federado} name="esta_federado" onChange={handleChange} />}
+              control={
+                <Checkbox
+                  checked={datos.esta_federado}
+                  name="esta_federado"
+                  onChange={handleChange}
+                />
+              }
               label="El equipo esta federado"
             />
 

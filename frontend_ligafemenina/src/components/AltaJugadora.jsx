@@ -105,7 +105,7 @@ function AltaJugadora() {
 
   return (
     <>
-      <Typography variant="h4" align="center" sx={{ mt: 2 }}>
+      <Typography variant="h4" align="center" sx={{ m: 4 }}>
         Alta jugadora
       </Typography>
       <Grid
@@ -118,7 +118,7 @@ function AltaJugadora() {
             component="form"
             spacing={2}
             onSubmit={handleSubmit}
-            sx={{ mx: 2 }}
+            sx={{ m: 2 }}
           >
             <div
               style={{

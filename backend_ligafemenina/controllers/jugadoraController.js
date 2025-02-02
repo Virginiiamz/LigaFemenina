@@ -130,6 +130,38 @@ class JugadoraController {
     }
   }
 
+  async getJugadoraByEquipoAndDisponibleJugar(req, res) {
+    const idequipo = req.params.idequipo; // Obtenemos el parámetro de la ciudad de la URL
+    const disponible_jugar = req.params.disponible_jugar;
+
+    try {
+      const jugadoras = await Jugadora.findAll({
+        where: {
+          idequipo: idequipo,
+          disponible_jugar: disponible_jugar === "true",
+        },
+        include: [
+          {
+            model: Equipo,
+            as: "idequipo_equipo", // Usa el alias definido en las relaciones del modelo
+            attributes: ["idequipo", "nombre"], // Selecciona los campos que quieres recuperar del equipo
+          },
+        ],
+      });
+
+      if (jugadoras.length === 0) {
+        return res
+          .status(404)
+          .json({ mensaje: "No se encontraron jugadoras en ese equipo" });
+      }
+
+      res.json({ datos: jugadoras });
+    } catch (error) {
+      console.error("Error al buscar jugadoras:", error);
+      res.status(500).json({ mensaje: "Error al recuperar los datos" });
+    }
+  }
+
   async updateJugadora(req, res) {
     const jugadora = req.body; // Recuperamos datos para actualizar
     const idjugadora = req.params.idjugadora; // dato de la ruta
@@ -151,7 +183,10 @@ class JugadoraController {
         res
           .status(404)
           .json(
-            Respuesta.error(null, "No encontrado o no modificado: " + idjugadora)
+            Respuesta.error(
+              null,
+              "No encontrado o no modificado: " + idjugadora
+            )
           );
       } else {
         // Al dar status 204 no se devuelva nada
