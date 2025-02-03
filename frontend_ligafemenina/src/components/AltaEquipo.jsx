@@ -6,6 +6,7 @@ import {
   Grid,
   FormControlLabel,
   Checkbox,
+  Grid2,
 } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router";
@@ -31,25 +32,27 @@ function AltaEquipo() {
     e.preventDefault();
 
     // Enviamos los datos mediante fetch
-    try {
-      const response = await fetch("http://localhost:3000/api/equipo/", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(datos),
-      });
+    if (validarDatos()) {
+      try {
+        const response = await fetch("http://localhost:3000/api/equipo/", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(datos),
+        });
 
-      if (response.ok) {
-        const respuesta = await response.json();
-        alert(respuesta.mensaje);
-        if (respuesta.ok) {
-          navigate("/"); // Volver a la página principal
+        if (response.ok) {
+          const respuesta = await response.json();
+          alert(respuesta.mensaje);
+          if (respuesta.ok) {
+            navigate("/"); // Volver a la página principal
+          }
         }
+      } catch (error) {
+        console.error("Error:", error);
+        alert("Error:", error);
       }
-    } catch (error) {
-      console.error("Error:", error);
-      alert("Error:", error);
     }
   };
 
@@ -92,7 +95,7 @@ function AltaEquipo() {
         spacing={2}
         sx={{ mt: 2, justifyContent: "center", alignItems: "center" }}
       >
-        <Grid size={{ xs: 12, sm: 6, md: 4 }}>
+        <Grid2 size={{ xs: 12, sm: 6, md: 4 }}>
           <Stack
             component="form"
             spacing={2}
@@ -132,7 +135,6 @@ function AltaEquipo() {
               name="urlimagen"
               value={datos.urlimagen}
               onChange={handleChange}
-              
             />
             <TextField
               id="outlined-basic"
@@ -173,7 +175,7 @@ function AltaEquipo() {
               Guardar
             </Button>
           </Stack>
-        </Grid>
+        </Grid2>
       </Grid>
     </>
   );

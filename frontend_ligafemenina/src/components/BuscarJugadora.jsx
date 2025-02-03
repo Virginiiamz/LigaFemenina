@@ -4,6 +4,7 @@ import {
   FormControl,
   FormControlLabel,
   Grid,
+  Grid2,
   InputLabel,
   MenuItem,
   Paper,
@@ -108,7 +109,7 @@ function BuscarJugadora() {
         container
         sx={{ m: 4, justifyContent: "left", alignItems: "center" }}
       >
-        <Grid size={{ xs: 12, sm: 6, md: 4 }}>
+        <Grid2 size={{ xs: 12, sm: 6, md: 4 }}>
           <Stack
             component="form"
             spacing={2}
@@ -157,7 +158,7 @@ function BuscarJugadora() {
               Buscar
             </Button>
           </Stack>
-        </Grid>
+        </Grid2>
       </Grid>
       <TableContainer component={Paper}>
         <Table sx={{ width: "100%" }} aria-label="simple table">

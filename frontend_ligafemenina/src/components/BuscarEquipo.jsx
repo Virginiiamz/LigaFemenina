@@ -3,6 +3,7 @@ import {
   Checkbox,
   FormControlLabel,
   Grid,
+  Grid2,
   Paper,
   Stack,
   Switch,
@@ -89,7 +90,7 @@ function BuscarEquipo() {
         container
         sx={{ m: 4, justifyContent: "left", alignItems: "center" }}
       >
-        <Grid size={{ xs: 12, sm: 6, md: 4 }}>
+        <Grid2 size={{ xs: 12, sm: 6, md: 4 }}>
           <Stack
             component="form"
             spacing={2}
@@ -125,7 +126,7 @@ function BuscarEquipo() {
               Buscar
             </Button>
           </Stack>
-        </Grid>
+        </Grid2>
       </Grid>
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">

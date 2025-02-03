@@ -4,6 +4,7 @@ import {
   FormControl,
   FormControlLabel,
   Grid,
+  Grid2,
   InputLabel,
   MenuItem,
   Select,
@@ -113,7 +114,7 @@ function AltaJugadora() {
         spacing={2}
         sx={{ mt: 2, justifyContent: "center", alignItems: "center" }}
       >
-        <Grid size={{ xs: 12, sm: 6, md: 4 }}>
+        <Grid2 size={{ xs: 12, sm: 6, md: 4 }}>
           <Stack
             component="form"
             spacing={2}
@@ -212,7 +213,7 @@ function AltaJugadora() {
               Guardar
             </Button>
           </Stack>
-        </Grid>
+        </Grid2>
       </Grid>
     </>
   );
