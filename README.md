@@ -4,6 +4,7 @@
 <h3>Datos para la conexión de la BD:</h3>
 <ul>
   <li>Nombre BD: ligafemenina</li>
+  <li>Usuario: root</li>
+  <li>Contraseña: test</li>
 </ul>
-<ul>Usuario: root</ul>
-<ul>Contraseña: test</ul>
+
