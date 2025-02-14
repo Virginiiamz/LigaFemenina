@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import {
   BarChart,
@@ -10,6 +10,7 @@ import {
   Tooltip,
   Legend,
 } from "recharts";
+import generatePDF from "../utils/GeneratePDF";
 
 function GraficaJugadoras() {
   const [datos, setDatos] = useState([]);
@@ -38,7 +39,21 @@ function GraficaJugadoras() {
 
   return (
     <>
-      <Box sx={{display: 'flex', justifyContent: 'center', flexDirection: 'column', alignItems: 'center', gap: 5}}>
+      <Box sx={{ mx: 4, mt: 2 }}>
+        <Button variant="contained" color="inherit" onClick={generatePDF}>
+          Imprimir listado (jsPDF + html2canvas)
+        </Button>
+      </Box>
+      <Box
+        id="pdf-content"
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: 5,
+        }}
+      >
         <Typography variant="h4" align="center" sx={{ mt: 4 }}>
           Numero de jugadoras por equipos
         </Typography>

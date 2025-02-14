@@ -1,4 +1,5 @@
 import {
+  Box,
   Button,
   Paper,
   Stack,
@@ -14,6 +15,72 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/EditNote";
+import generatePDF from "../utils/GeneratePDF";
+import {
+  Document,
+  Page,
+  Text,
+  View,
+  StyleSheet,
+  PDFDownloadLink,
+} from "@react-pdf/renderer";
+
+// Estilos del PDF
+const styles = StyleSheet.create({
+  page: { padding: 20 },
+  title: {
+    fontSize: 16,
+    marginBottom: 10,
+    textAlign: "center",
+    fontWeight: "bold",
+  },
+  table: {
+    display: "table",
+    width: "auto",
+    borderStyle: "solid",
+    borderWidth: 1,
+    marginBottom: 10,
+  },
+  tableRow: { flexDirection: "row" },
+  tableColHeader: {
+    width: "100%",
+    borderStyle: "solid",
+    borderWidth: 1,
+    backgroundColor: "#ddd",
+    padding: 5,
+    fontWeight: "bold",
+    fontSize: 8,
+  },
+  tableCol: { width: "100%", borderStyle: "solid", borderWidth: 1, padding: 5, fontSize: 8},
+});
+
+// Componente del documento PDF
+const ListadoEquiposPDF = ({ data }) => (
+  <Document>
+    <Page size="A4" style={styles.page}>
+      <Text style={styles.title}>Listado de equipos</Text>
+      <View style={styles.table}>
+        {/* Encabezado */}
+        <View style={styles.tableRow}>
+          <Text style={styles.tableColHeader}>IDEQUIPO</Text>
+          <Text style={styles.tableColHeader}>NOMBRE</Text>
+          <Text style={styles.tableColHeader}>CIUDAD</Text>
+          <Text style={styles.tableColHeader}>DINERO</Text>
+          <Text style={styles.tableColHeader}>FECHA CREACION</Text>
+        </View>
+        {data.map((row) => (
+          <View style={styles.tableRow} key={row.idequipo}>
+            <Text style={styles.tableCol}>{row.idequipo}</Text>
+            <Text style={styles.tableCol}>{row.nombre}</Text>
+            <Text style={styles.tableCol}>{row.ciudad}</Text>
+            <Text style={styles.tableCol}>{row.dinero_transferencias}</Text>
+            <Text style={styles.tableCol}>{row.fechacreacion}</Text>
+          </View>
+        ))}
+      </View>
+    </Page>
+  </Document>
+);
 
 function ListadoEquipos() {
   const [datos, setDatos] = useState([]);
@@ -108,7 +175,35 @@ function ListadoEquipos() {
           </div>
         </Stack>
       </div>
-      <TableContainer component={Paper}>
+
+      <Box sx={{ display: "flex", justifyContent: "start", gap: "1rem", m: 2 }}>
+        <Button
+          variant="contained"
+          color="inherit"
+          onClick={() => window.print()}
+        >
+          Imprimir listado (navegador)
+        </Button>
+        <Button variant="contained" color="inherit" onClick={generatePDF}>
+          Imprimir listado (jsPDF + html2canvas)
+        </Button>
+        <Button variant="contained" color="inherit">
+          <PDFDownloadLink
+            document={
+              <ListadoEquiposPDF
+                data={equipoEncontrado ? [equipoEncontrado] : datos}
+              />
+            }
+            fileName="tabla.pdf"
+          >
+            {({ loading }) =>
+              loading ? "Generando PDF..." : "Imprimir listado (react-pdf)"
+            }
+          </PDFDownloadLink>
+        </Button>
+      </Box>
+
+      <TableContainer component={Paper} id="pdf-content">
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
