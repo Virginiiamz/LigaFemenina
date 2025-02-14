@@ -68,6 +68,9 @@ function Menu() {
                   <Link to="/buscadorjugadoras" style={{ color: "#4f4f4f" }}>
                     <MDBDropdownItem link>Buscador de jugadoras</MDBDropdownItem>
                   </Link>
+                  <Link to="/graficajugadoras" style={{ color: "#4f4f4f" }}>
+                    <MDBDropdownItem link>Grafica de jugadoras</MDBDropdownItem>
+                  </Link>
                   <Link to="/listadojugadoras" style={{ color: "#4f4f4f" }}>
                     <MDBDropdownItem link>Listado de jugadoras</MDBDropdownItem>
                   </Link>

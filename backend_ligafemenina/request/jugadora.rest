@@ -3,3 +3,6 @@ GET http://localhost:3000/api/jugadora
 
 ### Recupera las jugadoras
 GET http://localhost:3000/api/jugadora/11
+
+###
+GET http://localhost:3000/api/jugadora/grafica

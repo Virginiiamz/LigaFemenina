@@ -12,6 +12,41 @@ const Jugadora = models.jugadora;
 const Equipo = models.equipo;
 
 class JugadoraController {
+  async getGraficaJugadoras(req, res) {
+    try {
+      const data = await Jugadora.findAll({
+        attributes: [
+          [sequelize.col("idequipo_equipo.nombre"), "nombre"],
+          [
+            sequelize.fn("COUNT", sequelize.col("idequipo_equipo.nombre")),
+            "cantidad",
+          ],
+        ],
+        include: [
+          {
+            model: Equipo,
+            as: "idequipo_equipo", // Alias usado en la relación
+            attributes: [], // Evita traer columnas adicionales de Equipo
+          },
+        ],
+        group: ["idequipo_equipo.nombre"],
+        raw: true,
+      });
+
+      res.json(Respuesta.exito(data, "Datos de jugadoras recuperados"));
+    } catch (err) {
+      logMensaje("Error al recuperar los datos de las jugadoras: " + err);
+      res
+        .status(500)
+        .json(
+          Respuesta.error(
+            null,
+            `Error al recuperar los datos de las jugadoras: ${req.originalUrl}`
+          )
+        );
+    }
+  }
+
   async getAllJugadoras(req, res) {
     try {
       const data = await Jugadora.findAll({
