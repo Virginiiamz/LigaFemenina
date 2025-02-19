@@ -13,7 +13,6 @@ const cors = require("cors");
 const equipoRoutes = require("./routes/equipoRoutes");
 const jugadoraRoutes = require("./routes/jugadoraRoutes");
 
-
 const app = express();
 
 // Configurar middleware para analizar JSON en las solicitudes
@@ -40,7 +39,10 @@ app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
-// Iniciar el servidor
-app.listen(config.port, () => {
-  console.log(`Servidor escuchando en el puerto ${config.port}`);
-});
+if (process.env.NODE_ENV !== "test") {
+  app.listen(config.port, () => {
+    console.log(`Servidor escuchando en el puerto ${config.port}`);
+  });
+}
+
+module.exports = app;
