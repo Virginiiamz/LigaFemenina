@@ -1,4 +1,32 @@
-/**
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: ModificarJugadora.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: ModificarJugadora.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
  * @fileoverview Componente para modificar los datos de una jugadora existente
  * @author Tu Nombre
  * @version 1.0.0
@@ -68,7 +96,7 @@ function ModificarJugadora() {
 
   /**
    * Estado para la lista de equipos disponibles
-   * @type {[Array<Equipo>, Function]}
+   * @type {[Array&lt;Equipo>, Function]}
    */
   const [equipos, setEquipos] = useState([]);
 
@@ -175,7 +203,7 @@ function ModificarJugadora() {
       sueldo: false,
     };
 
-    if (datos.sueldo < 0) {
+    if (datos.sueldo &lt; 0) {
       // Error en el dinero
       validacionAux.sueldo = true;
       // Formulario invalido
@@ -190,7 +218,7 @@ function ModificarJugadora() {
 
   /**
    * Maneja los cambios en los campos del formulario
-   * @param {React.ChangeEvent<HTMLInputElement>} e - Evento de cambio
+   * @param {React.ChangeEvent&lt;HTMLInputElement>} e - Evento de cambio
    */
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -202,30 +230,30 @@ function ModificarJugadora() {
 
   // Renderizado del componente con Material-UI
   return (
-    <>
-      <Typography variant="h4" align="center" sx={{ m: 4 }}>
+    &lt;>
+      &lt;Typography variant="h4" align="center" sx={{ m: 4 }}>
         Modificar jugadora
-      </Typography>
-      <Grid
+      &lt;/Typography>
+      &lt;Grid
         container
         spacing={2}
         sx={{ my: 2, justifyContent: "center", alignItems: "center" }}
       >
-        <Grid2 size={{ xs: 12, sm: 6, md: 4 }}>
-          <Stack
+        &lt;Grid2 size={{ xs: 12, sm: 6, md: 4 }}>
+          &lt;Stack
             component="form"
             spacing={2}
             onSubmit={handleSubmit}
             sx={{ my: 2 }}
           >
-            <div
+            &lt;div
               style={{
                 display: "flex",
                 justifyContent: "space-between",
                 gap: "1rem",
               }}
             >
-              <TextField
+              &lt;TextField
                 id="outlined-basic"
                 label="Nombre"
                 variant="outlined"
@@ -234,7 +262,7 @@ function ModificarJugadora() {
                 onChange={handleChange}
                 required
               />
-              <TextField
+              &lt;TextField
                 id="outlined-basic"
                 label="Apellidos"
                 variant="outlined"
@@ -243,10 +271,10 @@ function ModificarJugadora() {
                 onChange={handleChange}
                 required
               />
-            </div>
-            <FormControl>
-              <InputLabel id="equipo">Equipo</InputLabel>
-              <Select
+            &lt;/div>
+            &lt;FormControl>
+              &lt;InputLabel id="equipo">Equipo&lt;/InputLabel>
+              &lt;Select
                 labelId="equipo"
                 name="idequipo"
                 value={datos.idequipo}
@@ -256,13 +284,13 @@ function ModificarJugadora() {
                 required
               >
                 {equipos.map((equipo) => (
-                  <MenuItem key={equipo.idequipo} value={equipo.idequipo}>
+                  &lt;MenuItem key={equipo.idequipo} value={equipo.idequipo}>
                     {equipo.nombre}
-                  </MenuItem>
+                  &lt;/MenuItem>
                 ))}
-              </Select>
-            </FormControl>
-            <TextField
+              &lt;/Select>
+            &lt;/FormControl>
+            &lt;TextField
               id="outlined-basic"
               label="Posicion"
               variant="outlined"
@@ -271,7 +299,7 @@ function ModificarJugadora() {
               onChange={handleChange}
               required
             />
-            <TextField
+            &lt;TextField
               id="outlined-basic"
               label="Sueldo"
               variant="outlined"
@@ -282,12 +310,12 @@ function ModificarJugadora() {
               required
               error={validacion.sueldo}
               helperText={
-                validacion.sueldo && "El sueldo tiene que ser positivo"
+                validacion.sueldo &amp;&amp; "El sueldo tiene que ser positivo"
               }
             />
-            <FormControlLabel
+            &lt;FormControlLabel
               control={
-                <Checkbox
+                &lt;Checkbox
                   checked={datos.disponible_jugar}
                   name="disponible_jugar"
                   onChange={handleChange}
@@ -295,14 +323,37 @@ function ModificarJugadora() {
               }
               label="La jugadora esta disponible para jugar"
             />
-            <Button variant="contained" color="inherit" type="submit">
+            &lt;Button variant="contained" color="inherit" type="submit">
               Guardar
-            </Button>
-          </Stack>
-        </Grid2>
-      </Grid>
-    </>
+            &lt;/Button>
+          &lt;/Stack>
+        &lt;/Grid2>
+      &lt;/Grid>
+    &lt;/>
   );
 }
 
 export default ModificarJugadora;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#AltaEquipo">AltaEquipo</a></li><li><a href="global.html#AltaJugadora">AltaJugadora</a></li><li><a href="global.html#BuscarEquipo">BuscarEquipo</a></li><li><a href="global.html#BuscarJugadora">BuscarJugadora</a></li><li><a href="global.html#GraficaJugadoras">GraficaJugadoras</a></li><li><a href="global.html#ListadoEquipos">ListadoEquipos</a></li><li><a href="global.html#ListadoEquiposPDF">ListadoEquiposPDF</a></li><li><a href="global.html#ListadoJugadoras">ListadoJugadoras</a></li><li><a href="global.html#ListadoJugadorasPDF">ListadoJugadorasPDF</a></li><li><a href="global.html#Menu">Menu</a></li><li><a href="global.html#ModificarEquipo">ModificarEquipo</a></li><li><a href="global.html#ModificarJugadora">ModificarJugadora</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Wed Feb 26 2025 10:56:57 GMT+0100 (hora estándar de Europa central)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

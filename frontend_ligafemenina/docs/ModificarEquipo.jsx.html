@@ -1,4 +1,32 @@
-/**
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: ModificarEquipo.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: ModificarEquipo.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
  * @fileoverview Componente para modificar los datos de un equipo existente
  * @author Tu Nombre
  * @version 1.0.0
@@ -134,7 +162,7 @@ function ModificarEquipo() {
       dinero_transferencias: false,
     };
 
-    if (datos.dinero_transferencias < 0) {
+    if (datos.dinero_transferencias &lt; 0) {
       // Error en el dinero
       validacionAux.dinero_transferencias = true;
       // Formulario invalido
@@ -149,7 +177,7 @@ function ModificarEquipo() {
 
   /**
    * Maneja los cambios en los campos del formulario
-   * @param {React.ChangeEvent<HTMLInputElement>} e - Evento de cambio
+   * @param {React.ChangeEvent&lt;HTMLInputElement>} e - Evento de cambio
    */
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -160,33 +188,33 @@ function ModificarEquipo() {
   };
 
   return (
-    <>
+    &lt;>
       {/* Título del formulario */}
-      <Typography variant="h4" align="center" sx={{ m: 4 }}>
+      &lt;Typography variant="h4" align="center" sx={{ m: 4 }}>
         Modificar equipo
-      </Typography>
+      &lt;/Typography>
 
       {/* Grid container para centrar el formulario */}
-      <Grid
+      &lt;Grid
         container
         sx={{ my: 2, justifyContent: "center", alignItems: "center" }}
       >
         {/* Formulario de modificación */}
-        <Grid2 size={{ xs: 12, sm: 6, md: 4 }}>
-          <Stack
+        &lt;Grid2 size={{ xs: 12, sm: 6, md: 4 }}>
+          &lt;Stack
             component="form"
             spacing={2}
             onSubmit={handleSubmit}
             sx={{ my: 2 }}
           >
-            <div
+            &lt;div
               style={{
                 display: "flex",
                 justifyContent: "space-between",
                 gap: "1rem",
               }}
             >
-              <TextField
+              &lt;TextField
                 id="outlined-basic"
                 label="Nombre"
                 variant="outlined"
@@ -194,7 +222,7 @@ function ModificarEquipo() {
                 value={datos.nombre}
                 onChange={handleChange}
               />
-              <TextField
+              &lt;TextField
                 id="outlined-basic"
                 label="Ciudad"
                 variant="outlined"
@@ -202,8 +230,8 @@ function ModificarEquipo() {
                 value={datos.ciudad}
                 onChange={handleChange}
               />
-            </div>
-            <TextField
+            &lt;/div>
+            &lt;TextField
               id="outlined-basic"
               label="Url de la imagen"
               variant="outlined"
@@ -211,7 +239,7 @@ function ModificarEquipo() {
               value={datos.urlimagen}
               onChange={handleChange}
             />
-            <TextField
+            &lt;TextField
               id="outlined-basic"
               label="Total dinero disponible para transferencias"
               variant="outlined"
@@ -221,12 +249,12 @@ function ModificarEquipo() {
               onChange={handleChange}
               error={validacion.dinero_transferencias}
               helperText={
-                validacion.dinero_transferencias && "El dinero tiene que ser positivo"
+                validacion.dinero_transferencias &amp;&amp; "El dinero tiene que ser positivo"
               }
             />
-            <FormControlLabel
+            &lt;FormControlLabel
               control={
-                <Checkbox
+                &lt;Checkbox
                   checked={datos.esta_federado}
                   name="esta_federado"
                   onChange={handleChange}
@@ -235,14 +263,37 @@ function ModificarEquipo() {
               label="El equipo esta federado"
             />
 
-            <Button variant="contained" color="inherit" type="submit">
+            &lt;Button variant="contained" color="inherit" type="submit">
               Guardar
-            </Button>
-          </Stack>
-        </Grid2>
-      </Grid>
-    </>
+            &lt;/Button>
+          &lt;/Stack>
+        &lt;/Grid2>
+      &lt;/Grid>
+    &lt;/>
   );
 }
 
 export default ModificarEquipo;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#AltaEquipo">AltaEquipo</a></li><li><a href="global.html#AltaJugadora">AltaJugadora</a></li><li><a href="global.html#BuscarEquipo">BuscarEquipo</a></li><li><a href="global.html#BuscarJugadora">BuscarJugadora</a></li><li><a href="global.html#GraficaJugadoras">GraficaJugadoras</a></li><li><a href="global.html#ListadoEquipos">ListadoEquipos</a></li><li><a href="global.html#ListadoEquiposPDF">ListadoEquiposPDF</a></li><li><a href="global.html#ListadoJugadoras">ListadoJugadoras</a></li><li><a href="global.html#ListadoJugadorasPDF">ListadoJugadorasPDF</a></li><li><a href="global.html#Menu">Menu</a></li><li><a href="global.html#ModificarEquipo">ModificarEquipo</a></li><li><a href="global.html#ModificarJugadora">ModificarJugadora</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Wed Feb 26 2025 10:56:57 GMT+0100 (hora estándar de Europa central)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

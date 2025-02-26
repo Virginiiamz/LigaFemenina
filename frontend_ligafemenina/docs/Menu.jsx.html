@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: Menu.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: Menu.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @fileoverview Componente de navegación principal de la aplicación Liga Femenina
+ * @author Tu Nombre
+ * @version 1.0.0
+ */
+
+// Importaciones de MDB React UI Kit para la navegación
+import {
+    MDBCollapse,
+    MDBContainer,
+    MDBDropdown,
+    MDBDropdownItem,
+    MDBDropdownMenu,
+    MDBDropdownToggle,
+    MDBIcon,
+    MDBNavbar,
+    MDBNavbarBrand,
+    MDBNavbarItem,
+    MDBNavbarNav,
+    MDBNavbarToggler,
+} from "mdb-react-ui-kit";
+import { useState } from "react";
+import { Link } from "react-router";
+import logo from "../assets/images/logo.png";
+
+/**
+ * @typedef {Object} MenuProps
+ * No requiere props ya que es un componente de navegación global
+ */
+
+/**
+ * Componente de menú principal que proporciona navegación a todas las secciones
+ * @component
+ * @returns {JSX.Element} Barra de navegación responsive con dropdowns
+ */
+function Menu() {
+    /**
+     * Estado para controlar la apertura/cierre del menú en modo móvil
+     * @type {[boolean, Function]} Estado y función para actualizar
+     */
+    const [openBasic, setOpenBasic] = useState(false);
+
+    return (
+        &lt;MDBNavbar expand="lg" light bgColor="light">
+            &lt;MDBContainer fluid>
+                {/* Logo y nombre de la aplicación */}
+                &lt;MDBNavbarBrand href="#">
+                    &lt;img src={logo} height="30" alt="" loading="lazy" />
+                    Liga Femenina
+                &lt;/MDBNavbarBrand>
+
+                {/* Botón hamburguesa para modo móvil */}
+                &lt;MDBNavbarToggler
+                    aria-controls="navbarSupportedContent"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+                    onClick={() => setOpenBasic(!openBasic)}
+                >
+                    &lt;MDBIcon icon="bars" fas />
+                &lt;/MDBNavbarToggler>
+
+                {/* Contenido del menú colapsable */}
+                &lt;MDBCollapse navbar open={openBasic}>
+                    &lt;MDBNavbarNav className="mr-auto mb-2 mb-lg-0">
+                        {/* Menú desplegable de Equipos */}
+                        &lt;MDBNavbarItem>
+                            &lt;MDBDropdown>
+                                &lt;MDBDropdownToggle tag="a" className="nav-link" role="button">
+                                    Equipos
+                                &lt;/MDBDropdownToggle>
+                                &lt;MDBDropdownMenu>
+                                    &lt;Link to="/altaequipo" style={{ color: "#4f4f4f" }}>
+                                        &lt;MDBDropdownItem link>Alta de equipo&lt;/MDBDropdownItem>
+                                    &lt;/Link>
+                                    &lt;Link to="/buscadorequipos" style={{ color: "#4f4f4f" }}>
+                                        &lt;MDBDropdownItem link>Buscador de equipos&lt;/MDBDropdownItem>
+                                    &lt;/Link>
+                                    &lt;Link to="/listadoequipos" style={{ color: "#4f4f4f" }}>
+                                        &lt;MDBDropdownItem link>Listado de equipos&lt;/MDBDropdownItem>
+                                    &lt;/Link>
+                                &lt;/MDBDropdownMenu>
+                            &lt;/MDBDropdown>
+                        &lt;/MDBNavbarItem>
+
+                        {/* Menú desplegable de Jugadoras */}
+                        &lt;MDBNavbarItem>
+                            &lt;MDBDropdown>
+                                &lt;MDBDropdownToggle tag="a" className="nav-link" role="button">
+                                    Jugadoras
+                                &lt;/MDBDropdownToggle>
+                                &lt;MDBDropdownMenu>
+                                    &lt;Link to="/altajugadora" style={{ color: "#4f4f4f" }}>
+                                        &lt;MDBDropdownItem link>Alta de jugadora&lt;/MDBDropdownItem>
+                                    &lt;/Link>
+                                    &lt;Link to="/buscadorjugadoras" style={{ color: "#4f4f4f" }}>
+                                        &lt;MDBDropdownItem link>Buscador de jugadoras&lt;/MDBDropdownItem>
+                                    &lt;/Link>
+                                    &lt;Link to="/graficajugadoras" style={{ color: "#4f4f4f" }}>
+                                        &lt;MDBDropdownItem link>Grafica de jugadoras&lt;/MDBDropdownItem>
+                                    &lt;/Link>
+                                    &lt;Link to="/listadojugadoras" style={{ color: "#4f4f4f" }}>
+                                        &lt;MDBDropdownItem link>Listado de jugadoras&lt;/MDBDropdownItem>
+                                    &lt;/Link>
+                                &lt;/MDBDropdownMenu>
+                            &lt;/MDBDropdown>
+                        &lt;/MDBNavbarItem>
+                    &lt;/MDBNavbarNav>
+                &lt;/MDBCollapse>
+            &lt;/MDBContainer>
+        &lt;/MDBNavbar>
+    );
+}
+
+export default Menu;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#AltaEquipo">AltaEquipo</a></li><li><a href="global.html#AltaJugadora">AltaJugadora</a></li><li><a href="global.html#BuscarEquipo">BuscarEquipo</a></li><li><a href="global.html#BuscarJugadora">BuscarJugadora</a></li><li><a href="global.html#GraficaJugadoras">GraficaJugadoras</a></li><li><a href="global.html#ListadoEquipos">ListadoEquipos</a></li><li><a href="global.html#ListadoEquiposPDF">ListadoEquiposPDF</a></li><li><a href="global.html#ListadoJugadoras">ListadoJugadoras</a></li><li><a href="global.html#ListadoJugadorasPDF">ListadoJugadorasPDF</a></li><li><a href="global.html#Menu">Menu</a></li><li><a href="global.html#ModificarEquipo">ModificarEquipo</a></li><li><a href="global.html#ModificarJugadora">ModificarJugadora</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Wed Feb 26 2025 10:56:57 GMT+0100 (hora estándar de Europa central)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

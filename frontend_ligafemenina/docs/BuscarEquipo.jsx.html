@@ -1,4 +1,32 @@
-/**
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: BuscarEquipo.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: BuscarEquipo.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
  * @fileoverview Componente para buscar y gestionar equipos de la liga femenina
  * @author Tu Nombre
  * @version 1.0.0
@@ -109,7 +137,7 @@ function BuscarEquipo() {
 
   /**
    * Maneja los cambios en los campos del formulario
-   * @param {React.ChangeEvent<HTMLInputElement>} e - Evento de cambio
+   * @param {React.ChangeEvent&lt;HTMLInputElement>} e - Evento de cambio
    */
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -120,16 +148,16 @@ function BuscarEquipo() {
   };
 
   return (
-    <>
-      <Typography variant="h4" align="left" sx={{ m: 4 }}>
+    &lt;>
+      &lt;Typography variant="h4" align="left" sx={{ m: 4 }}>
         Buscador de equipos
-      </Typography>
-      <Grid
+      &lt;/Typography>
+      &lt;Grid
         container
         sx={{ m: 4, justifyContent: "left", alignItems: "center" }}
       >
-        <Grid2 size={{ xs: 12, sm: 6, md: 4 }}>
-          <Stack
+        &lt;Grid2 size={{ xs: 12, sm: 6, md: 4 }}>
+          &lt;Stack
             component="form"
             spacing={2}
             onSubmit={handleSubmit}
@@ -140,7 +168,7 @@ function BuscarEquipo() {
               width: "100%",
             }}
           >
-            <TextField
+            &lt;TextField
               id="outlined-basic"
               label="Ciudad"
               variant="outlined"
@@ -150,9 +178,9 @@ function BuscarEquipo() {
               required
               sx={{ width: "100%" }}
             />
-            <FormControlLabel
+            &lt;FormControlLabel
               control={
-                <Checkbox
+                &lt;Checkbox
                   checked={datos.esta_federado}
                   name="esta_federado"
                   onChange={handleChange}
@@ -160,50 +188,50 @@ function BuscarEquipo() {
               }
               label="El equipo esta federado"
             />
-            <Button sx={{ width: "20rem" }} variant="contained" color="inherit" type="submit">
+            &lt;Button sx={{ width: "20rem" }} variant="contained" color="inherit" type="submit">
               Buscar
-            </Button>
-          </Stack>
-        </Grid2>
-      </Grid>
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell align="center">IDEQUIPO</TableCell>
-              <TableCell align="center">IMAGEN</TableCell>
-              <TableCell align="center">NOMBRE</TableCell>
-              <TableCell align="center">CIUDAD</TableCell>
-              <TableCell align="center">DINERO DISPONIBLE</TableCell>
-              <TableCell align="center">FECHA DE CREACION</TableCell>
-              <TableCell align="center">ACCIONES</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
+            &lt;/Button>
+          &lt;/Stack>
+        &lt;/Grid2>
+      &lt;/Grid>
+      &lt;TableContainer component={Paper}>
+        &lt;Table sx={{ minWidth: 650 }} aria-label="simple table">
+          &lt;TableHead>
+            &lt;TableRow>
+              &lt;TableCell align="center">IDEQUIPO&lt;/TableCell>
+              &lt;TableCell align="center">IMAGEN&lt;/TableCell>
+              &lt;TableCell align="center">NOMBRE&lt;/TableCell>
+              &lt;TableCell align="center">CIUDAD&lt;/TableCell>
+              &lt;TableCell align="center">DINERO DISPONIBLE&lt;/TableCell>
+              &lt;TableCell align="center">FECHA DE CREACION&lt;/TableCell>
+              &lt;TableCell align="center">ACCIONES&lt;/TableCell>
+            &lt;/TableRow>
+          &lt;/TableHead>
+          &lt;TableBody>
             {equiposEncontrado?.map((equipo) => (
-              <TableRow
+              &lt;TableRow
                 key={equipo.idequipo}
-                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                sx={{ "&amp;:last-child td, &amp;:last-child th": { border: 0 } }}
               >
-                <TableCell component="th" scope="row" align="center">
+                &lt;TableCell component="th" scope="row" align="center">
                   {equipo.idequipo}
-                </TableCell>
-                <TableCell component="th" scope="row" align="center">
-                  <img
+                &lt;/TableCell>
+                &lt;TableCell component="th" scope="row" align="center">
+                  &lt;img
                     style={{ width: "32px" }}
-                    srcSet={`${equipo.urlimagen}?w=32&h=32&fit=crop&auto=format&dpr=2`}
-                    src={`${equipo.urlimagen}?w=32&h=32fit=crop&auto=format`}
+                    srcSet={`${equipo.urlimagen}?w=32&amp;h=32&amp;fit=crop&amp;auto=format&amp;dpr=2`}
+                    src={`${equipo.urlimagen}?w=32&amp;h=32fit=crop&amp;auto=format`}
                     alt={equipo.nombre}
                     loading="lazy"
                   />
-                </TableCell>
-                <TableCell align="center">{equipo.nombre}</TableCell>
-                <TableCell align="center">{equipo.ciudad}</TableCell>
-                <TableCell align="center">
+                &lt;/TableCell>
+                &lt;TableCell align="center">{equipo.nombre}&lt;/TableCell>
+                &lt;TableCell align="center">{equipo.ciudad}&lt;/TableCell>
+                &lt;TableCell align="center">
                   {equipo.dinero_transferencias}
-                </TableCell>
-                <TableCell align="center">{equipo.fechacreacion}</TableCell>
-                <TableCell
+                &lt;/TableCell>
+                &lt;TableCell align="center">{equipo.fechacreacion}&lt;/TableCell>
+                &lt;TableCell
                   align="center"
                   style={{
                     display: "flex",
@@ -211,29 +239,52 @@ function BuscarEquipo() {
                     justifyContent: "center",
                   }}
                 >
-                  <Button
+                  &lt;Button
                     variant="contained"
                     onClick={() => handleDelete(equipo.idequipo)}
                     color="error"
                   >
-                    <DeleteIcon fontSize="small" />
-                  </Button>
-                  <Button
+                    &lt;DeleteIcon fontSize="small" />
+                  &lt;/Button>
+                  &lt;Button
                     variant="contained"
                     onClick={() =>
                       navigate("/modificarequipo/" + equipo.idequipo)
                     }
                   >
-                    <EditIcon fontSize="small" />
-                  </Button>
-                </TableCell>
-              </TableRow>
+                    &lt;EditIcon fontSize="small" />
+                  &lt;/Button>
+                &lt;/TableCell>
+              &lt;/TableRow>
             ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </>
+          &lt;/TableBody>
+        &lt;/Table>
+      &lt;/TableContainer>
+    &lt;/>
   );
 }
 
 export default BuscarEquipo;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#AltaEquipo">AltaEquipo</a></li><li><a href="global.html#AltaJugadora">AltaJugadora</a></li><li><a href="global.html#BuscarEquipo">BuscarEquipo</a></li><li><a href="global.html#BuscarJugadora">BuscarJugadora</a></li><li><a href="global.html#GraficaJugadoras">GraficaJugadoras</a></li><li><a href="global.html#ListadoEquipos">ListadoEquipos</a></li><li><a href="global.html#ListadoEquiposPDF">ListadoEquiposPDF</a></li><li><a href="global.html#ListadoJugadoras">ListadoJugadoras</a></li><li><a href="global.html#ListadoJugadorasPDF">ListadoJugadorasPDF</a></li><li><a href="global.html#Menu">Menu</a></li><li><a href="global.html#ModificarEquipo">ModificarEquipo</a></li><li><a href="global.html#ModificarJugadora">ModificarJugadora</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Wed Feb 26 2025 10:56:57 GMT+0100 (hora estándar de Europa central)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

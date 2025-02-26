@@ -1,3 +1,31 @@
+/**
+ * @fileoverview Componente para dar de alta nuevas jugadoras en la liga femenina
+ * @author Tu Nombre
+ * @version 1.0.0
+ */
+
+/**
+ * @typedef {Object} DatosJugadora
+ * @property {string} nombre - Nombre de la jugadora
+ * @property {string} apellidos - Apellidos de la jugadora
+ * @property {string} posicion - Posición en la que juega
+ * @property {number} sueldo - Sueldo de la jugadora
+ * @property {boolean} disponible_jugar - Indica si está disponible para jugar
+ * @property {Date} fechainscripcion - Fecha de inscripción en el equipo
+ * @property {string} idequipo - ID del equipo al que pertenece
+ */
+
+/**
+ * @typedef {Object} ValidacionEstado
+ * @property {boolean} sueldo - Indica si hay error en el campo sueldo
+ */
+
+/**
+ * @typedef {Object} Equipo
+ * @property {string} idequipo - ID único del equipo
+ * @property {string} nombre - Nombre del equipo
+ */
+
 import {
   Button,
   Checkbox,
@@ -15,7 +43,13 @@ import {
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 
+/**
+ * Componente para crear nuevas jugadoras en la liga
+ * @component
+ * @returns {JSX.Element} Formulario de alta de jugadora
+ */
 function AltaJugadora() {
+  // Estado inicial del formulario
   const [datos, setDatos] = useState({
     nombre: "",
     apellidos: "",
@@ -25,14 +59,25 @@ function AltaJugadora() {
     fechainscripcion: new Date(),
     idequipo: "",
   });
+
+  // Estado para almacenar la lista de equipos disponibles
   const [equipos, setEquipos] = useState([]);
+  
   const navigate = useNavigate();
 
+  // Estado para la validación de campos
   const [validacion, setValidacion] = useState({
-    sueldo: false,
+    sueldo: false, // true indica error
   });
 
+  /**
+   * Efecto que carga la lista de equipos al montar el componente
+   */
   useEffect(() => {
+    /**
+     * Obtiene la lista de equipos del servidor
+     * @async
+     */
     async function getEquipos() {
       let response = await fetch("http://localhost:3000/api/equipo/");
 
@@ -43,15 +88,17 @@ function AltaJugadora() {
     }
 
     getEquipos();
-  }, []); // Se ejecuta solo en el primer renderizado
+  }, []);
 
+  /**
+   * Maneja el envío del formulario
+   * @async
+   * @param {React.FormEvent} e - Evento del formulario
+   */
   const handleSubmit = async (e) => {
-    // No hacemos submit
     e.preventDefault();
 
-    console.log(datos);
     if (validarDatos()) {
-      // Enviamos los datos mediante fetch
       try {
         const response = await fetch("http://localhost:3000/api/jugadora/", {
           method: "POST",
@@ -65,37 +112,40 @@ function AltaJugadora() {
           const respuesta = await response.json();
           alert(respuesta.mensaje);
           if (respuesta.ok) {
-            navigate("/"); // Volver a la página principal
+            navigate("/");
           }
         }
       } catch (error) {
         console.error("Error:", error);
-        alert("Error:", error);
+        alert("Error:" + error);
       }
     }
   };
 
+  /**
+   * Valida los datos del formulario antes de enviar
+   * @returns {boolean} true si los datos son válidos, false en caso contrario
+   */
   function validarDatos() {
-    // En principio, damos por bueno el formulario
     let validado = true;
-    // Estado de la validación auxiliar
     let validacionAux = {
       sueldo: false,
     };
 
+    // Valida que el sueldo sea positivo
     if (datos.sueldo < 0) {
-      // Error en el dinero
       validacionAux.sueldo = true;
-      // Formulario invalido
       validado = false;
     }
 
-    // Actualizo el estado de la validacion de los Textfields
     setValidacion(validacionAux);
-    console.log("Formulario valido:", validado);
     return validado;
   }
 
+  /**
+   * Maneja los cambios en los campos del formulario
+   * @param {React.ChangeEvent<HTMLInputElement>} e - Evento de cambio
+   */
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     setDatos({

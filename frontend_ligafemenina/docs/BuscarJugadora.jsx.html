@@ -1,4 +1,32 @@
-/**
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: BuscarJugadora.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: BuscarJugadora.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
  * @fileoverview Componente para buscar y gestionar jugadoras de la liga femenina
  * @author Tu Nombre
  * @version 1.0.0
@@ -143,7 +171,7 @@ function BuscarJugadora() {
 
   /**
    * Maneja los cambios en los campos del formulario
-   * @param {React.ChangeEvent<HTMLInputElement>} e - Evento de cambio
+   * @param {React.ChangeEvent&lt;HTMLInputElement>} e - Evento de cambio
    */
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -154,16 +182,16 @@ function BuscarJugadora() {
   };
 
   return (
-    <>
-      <Typography variant="h4" align="left" sx={{ m: 4 }}>
+    &lt;>
+      &lt;Typography variant="h4" align="left" sx={{ m: 4 }}>
         Buscador de jugadoras
-      </Typography>
-      <Grid
+      &lt;/Typography>
+      &lt;Grid
         container
         sx={{ m: 4, justifyContent: "left", alignItems: "center" }}
       >
-        <Grid2 size={{ xs: 12, sm: 6, md: 4 }}>
-          <Stack
+        &lt;Grid2 size={{ xs: 12, sm: 6, md: 4 }}>
+          &lt;Stack
             component="form"
             spacing={2}
             onSubmit={handleSubmit}
@@ -174,9 +202,9 @@ function BuscarJugadora() {
               width: "100%",
             }}
           >
-            <FormControl sx={{ width: "100%" }}>
-              <InputLabel id="equipo">Equipo</InputLabel>
-              <Select
+            &lt;FormControl sx={{ width: "100%" }}>
+              &lt;InputLabel id="equipo">Equipo&lt;/InputLabel>
+              &lt;Select
                 labelId="equipo"
                 name="idequipo"
                 value={datos.idequipo}
@@ -186,15 +214,15 @@ function BuscarJugadora() {
                 fullWidth
               >
                 {equipos.map((equipo) => (
-                  <MenuItem key={equipo.idequipo} value={equipo.idequipo}>
+                  &lt;MenuItem key={equipo.idequipo} value={equipo.idequipo}>
                     {equipo.nombre}
-                  </MenuItem>
+                  &lt;/MenuItem>
                 ))}
-              </Select>
-            </FormControl>
-            <FormControlLabel
+              &lt;/Select>
+            &lt;/FormControl>
+            &lt;FormControlLabel
               control={
-                <Checkbox
+                &lt;Checkbox
                   checked={datos.disponible_jugar}
                   name="disponible_jugar"
                   onChange={handleChange}
@@ -202,51 +230,51 @@ function BuscarJugadora() {
               }
               label="La jugadora esta disponible para jugar"
             />
-            <Button
+            &lt;Button
               sx={{ width: "20rem" }}
               variant="contained"
               color="inherit"
               type="submit"
             >
               Buscar
-            </Button>
-          </Stack>
-        </Grid2>
-      </Grid>
-      <TableContainer component={Paper}>
-        <Table sx={{ width: "100%" }} aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell align="center">IDJUGADORA</TableCell>
-              <TableCell align="center">NOMBRE</TableCell>
-              <TableCell align="center">APELLIDOS</TableCell>
-              <TableCell align="center">POSICION</TableCell>
-              <TableCell align="center">EQUIPO</TableCell>
-              <TableCell align="center">SUELDO</TableCell>
-              <TableCell align="center">FECHA DE INSCRIPCION</TableCell>
-              <TableCell align="center">ACCIONES</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
+            &lt;/Button>
+          &lt;/Stack>
+        &lt;/Grid2>
+      &lt;/Grid>
+      &lt;TableContainer component={Paper}>
+        &lt;Table sx={{ width: "100%" }} aria-label="simple table">
+          &lt;TableHead>
+            &lt;TableRow>
+              &lt;TableCell align="center">IDJUGADORA&lt;/TableCell>
+              &lt;TableCell align="center">NOMBRE&lt;/TableCell>
+              &lt;TableCell align="center">APELLIDOS&lt;/TableCell>
+              &lt;TableCell align="center">POSICION&lt;/TableCell>
+              &lt;TableCell align="center">EQUIPO&lt;/TableCell>
+              &lt;TableCell align="center">SUELDO&lt;/TableCell>
+              &lt;TableCell align="center">FECHA DE INSCRIPCION&lt;/TableCell>
+              &lt;TableCell align="center">ACCIONES&lt;/TableCell>
+            &lt;/TableRow>
+          &lt;/TableHead>
+          &lt;TableBody>
             {jugadorasEncontradas?.map((jugadora) => (
-              <TableRow
+              &lt;TableRow
                 key={jugadora.idjugadora}
-                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                sx={{ "&amp;:last-child td, &amp;:last-child th": { border: 0 } }}
               >
-                <TableCell component="th" scope="row" align="center">
+                &lt;TableCell component="th" scope="row" align="center">
                   {jugadora.idjugadora}
-                </TableCell>
-                <TableCell align="center">{jugadora.nombre}</TableCell>
-                <TableCell align="center">{jugadora.apellidos}</TableCell>
-                <TableCell align="center">{jugadora.posicion}</TableCell>
-                <TableCell align="center">
+                &lt;/TableCell>
+                &lt;TableCell align="center">{jugadora.nombre}&lt;/TableCell>
+                &lt;TableCell align="center">{jugadora.apellidos}&lt;/TableCell>
+                &lt;TableCell align="center">{jugadora.posicion}&lt;/TableCell>
+                &lt;TableCell align="center">
                   {jugadora.idequipo_equipo.nombre}
-                </TableCell>
-                <TableCell align="center">{jugadora.sueldo}</TableCell>
-                <TableCell align="center">
+                &lt;/TableCell>
+                &lt;TableCell align="center">{jugadora.sueldo}&lt;/TableCell>
+                &lt;TableCell align="center">
                   {jugadora.fechainscripcion}
-                </TableCell>
-                <TableCell
+                &lt;/TableCell>
+                &lt;TableCell
                   align="center"
                   style={{
                     display: "flex",
@@ -254,29 +282,52 @@ function BuscarJugadora() {
                     justifyContent: "center",
                   }}
                 >
-                  <Button
+                  &lt;Button
                     variant="contained"
                     onClick={() => handleDelete(jugadora.idjugadora)}
                     color="error"
                   >
-                    <DeleteIcon fontSize="small" />
-                  </Button>
-                  <Button
+                    &lt;DeleteIcon fontSize="small" />
+                  &lt;/Button>
+                  &lt;Button
                     variant="contained"
                     onClick={() =>
                       navigate("/modificarjugadora/" + jugadora.idjugadora)
                     }
                   >
-                    <EditIcon fontSize="small" />
-                  </Button>
-                </TableCell>
-              </TableRow>
+                    &lt;EditIcon fontSize="small" />
+                  &lt;/Button>
+                &lt;/TableCell>
+              &lt;/TableRow>
             ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </>
+          &lt;/TableBody>
+        &lt;/Table>
+      &lt;/TableContainer>
+    &lt;/>
   );
 }
 
 export default BuscarJugadora;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#AltaEquipo">AltaEquipo</a></li><li><a href="global.html#AltaJugadora">AltaJugadora</a></li><li><a href="global.html#BuscarEquipo">BuscarEquipo</a></li><li><a href="global.html#BuscarJugadora">BuscarJugadora</a></li><li><a href="global.html#GraficaJugadoras">GraficaJugadoras</a></li><li><a href="global.html#ListadoEquipos">ListadoEquipos</a></li><li><a href="global.html#ListadoEquiposPDF">ListadoEquiposPDF</a></li><li><a href="global.html#ListadoJugadoras">ListadoJugadoras</a></li><li><a href="global.html#ListadoJugadorasPDF">ListadoJugadorasPDF</a></li><li><a href="global.html#Menu">Menu</a></li><li><a href="global.html#ModificarEquipo">ModificarEquipo</a></li><li><a href="global.html#ModificarJugadora">ModificarJugadora</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Wed Feb 26 2025 10:56:57 GMT+0100 (hora estándar de Europa central)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
